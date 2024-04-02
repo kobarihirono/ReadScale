@@ -52,7 +52,7 @@ export default function SignInScreen() {
           duration: 2000,
           isClosable: true,
         });
-        router.push("/"); // 成功後にユーザーをホームページへリダイレクト
+        router.push("/search"); // 成功後に検索ページへリダイレクト
       } else {
         toast({
           title: res.message,

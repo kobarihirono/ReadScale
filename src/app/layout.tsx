@@ -1,4 +1,5 @@
 import DesignProvider from "../common/providers/design_provider";
+import './globals.css';
 
 import type { Metadata } from "next";
 
