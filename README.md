@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# プロジェクト名
 
-## Getting Started
+読書管理アプリ - Read Scale
 
-First, run the development server:
+## Read Scale
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+読んだ本を登録すると書籍の厚みが高さに換算され、今までの読書記録を積み上げていくことができる読書管理アプリです。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 機能一覧
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **認証機能**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+  - 新規会員登録
+  - ログイン
+  - パスワードの変更
 
-## Learn More
+- **検索機能**
 
-To learn more about Next.js, take a look at the following resources:
+  - Google Book APIを使用した書籍検索
+  - 検索した書籍の並び替え
+  - 書籍の読了日の登録
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **マイページ**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  - アイコン画像の設定
+  - 登録した書籍の累計の高さの表示
+  - 登録済み書籍の読了日変更
+  - 登録済み書籍の削除
 
-## Deploy on Vercel
+- **タイムライン**
+  - 他ユーザーの登録情報の表示
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 使用技術
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+このプロジェクトでは以下の技術を使用しています
+
+- **使用言語**
+
+  - HTML
+  - SCSS
+  - Javascript
+
+- **ライブラリ**
+
+  - tailwind CSS
+  - React
+
+- **フレームワーク**
+
+  - Next.js
+
+- **外部API**
+
+  - Google Book API
+
+- **DB**
+
+  - Firestore
+
+- **認証**
+
+  - Firebase Authentication
+
+- **テスト**
+
+  - Jest
+  - React Testing Library
+
+- **デザインツール**
+
+  - figma
+
+- **エディタ**
+
+  - VisualStudio Code
+
+- **ホスティング**
+  - Vercel
+
+## テスト
+
+### テスト仕様書
+
+## デザイン
+
+以下URLよりデザインの確認ができます。
+https://www.figma.com/file/I03ssWJsITenc7cu3pzURF/Read-Scale?type=design&node-id=0%3A1&mode=design&t=Y1cT0JqxrgaY8MpP-1

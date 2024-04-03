@@ -59,7 +59,7 @@ export default function SignUpScreen() {
           isClosable: true,
         });
         console.log("新規登録成功");
-        router.push("/");
+        router.push("/search");
       } else {
         // ログイン失敗のトースト通知
         toast({
