@@ -1,3 +1,5 @@
+// lib/firebase/apis/auth.ts
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,

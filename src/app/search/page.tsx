@@ -5,6 +5,7 @@ import React, { SyntheticEvent, useState } from 'react';
 import type { NextPage } from 'next';
 import BookItem from '../../components/BookItem/BookItem';
 import { Book } from '../types/index';
+import MypageButton from '@/components/Button/MypageButton';
 
 const BookSearch: NextPage = () => {
   const [query, setQuery] = useState(""); 
@@ -30,6 +31,7 @@ const BookSearch: NextPage = () => {
 
   return (
     <div>
+      <MypageButton />
       <input
         type="text"
         value={query}
