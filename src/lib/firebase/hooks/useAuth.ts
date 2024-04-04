@@ -1,7 +1,8 @@
 // lib/firebase/hooks/useAuth.ts
+'use client'
 
 import { useState, useEffect } from 'react';
-import { auth } from '@/lib/firebase/config'; // authオブジェクトの正しいパスを確認してください
+import { auth } from '@/lib/firebase/config';
 import { onAuthStateChanged, User } from 'firebase/auth';
 
 export const useAuth = () => {

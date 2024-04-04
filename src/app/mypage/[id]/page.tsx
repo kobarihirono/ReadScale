@@ -1,8 +1,9 @@
 // src/app/my-page/[id]/page.tsx
+'use client'
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useAuth } from '@/lib/firebase/hooks/useAuth'; // useAuthフックの正しいパスを確認してください
+import { useRouter, usePathname } from 'next/navigation';
+import { useAuth } from '@/lib/firebase/hooks/useAuth';
 import { getUserInfo } from '@/lib/firebase/apis/user';
 
 const MyPage = () => {
@@ -10,21 +11,21 @@ const MyPage = () => {
   const [loading, setLoading] = useState(true);
   const { currentUser } = useAuth();
   const router = useRouter();
-  const { id } = router.query;
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!currentUser) {
-      router.push('/login');
-    } else if (id) {
+      router.push('/signin');
+    } else if (pathname) {
       const fetchUserInfo = async () => {
-        const userInfo = await getUserInfo(id.toString());
+        const userInfo = await getUserInfo(pathname.toString());
         setUserInfo(userInfo);
         setLoading(false);
       };
 
       fetchUserInfo().catch(console.error);
     }
-  }, [id, currentUser, router]);
+  }, [pathname, currentUser, router]);
 
   if (loading) {
     return <div>Loading...</div>;

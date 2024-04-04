@@ -37,12 +37,12 @@
 - **使用言語**
 
   - HTML
-  - SCSS
+  - CSS
   - Javascript
 
 - **ライブラリ**
 
-  - tailwind CSS
+  - Tailwind CSS
   - React
 
 - **フレームワーク**

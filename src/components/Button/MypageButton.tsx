@@ -2,16 +2,16 @@
 
 import Link from 'next/link';
 import { Button } from '@chakra-ui/react';
-import { useAuth } from '@/lib/firebase/hooks/useAuth'; // useAuthフックの正しいパスを確認してください
+import { useAuth } from '@/lib/firebase/hooks/useAuth';
 
 const MypageButton = () => {
   const { currentUser } = useAuth();
   const userId = currentUser?.uid;
 
-  if (!userId) return null; // ユーザーIDがない場合は何も表示しない
+  if (!userId) return null;
 
   return (
-    <Link href={`/my-page/${userId}`} passHref>
+    <Link href={`/mypage/${userId}`} passHref>
       <Button as="a" colorScheme="blue">マイページへ</Button>
     </Link>
   );
