@@ -37,12 +37,12 @@
 - **使用言語**
 
   - HTML
-  - SCSS
+  - CSS
   - Javascript
 
 - **ライブラリ**
 
-  - tailwind CSS
+  - Tailwind CSS
   - React
 
 - **フレームワーク**
@@ -76,6 +76,37 @@
 
 - **ホスティング**
   - Vercel
+
+## src ファイル構成
+
+```plaintext
+scr/
+|
+|-- app/ # サイト全体のページ構造
+|   |-- types # 型設定ファイルを格納
+|   |--
+|   |-- 
+|
+|-- components/ # 再利用可能な UI コンポーネント
+|   |-- Buttons/ # ボタンを格納するファイル
+|   |    |-- AuthButton.tsx # 認証に使用するボタン
+|   |    |-- ...
+|   |-- ...
+| 
+|-- common/ # UIライブラリなどの設定
+|   |-- ...
+|
+|-- lib/ # カスタムフックやfirebaseのconfigなどを格納
+|   |-- apis # firebase関連のapi
+|   |-- hooks # カスタムフック
+|   |-- ...
+|
+|-- page/ # 外部APIを使用する際の設定を格納
+|   |-- apis # firebase関連のapi
+|   |-- ...
+|
+`-- ...
+```
 
 ## テスト
 

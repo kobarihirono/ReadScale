@@ -1,4 +1,4 @@
-import { Book } from '../../pages/api/books';
+import { Book } from '../../app/types/index';
 
 type AppProps = { book: Book };
 const BookItem = ({ book }: AppProps) => {
