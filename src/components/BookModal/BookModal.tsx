@@ -1,14 +1,10 @@
 // components/BookModal/BookModal.tsx
 
-import React, { useEffect, useState } from 'react';
-import { Book } from '../../app/types/index';
+import React, { useEffect, useState } from "react";
+import { Book } from "../../app/types/index";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "@/lib/firebase/config";
-import {
-  addDoc,
-  collection,
-  serverTimestamp,
-} from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 interface BookModalProps {
   book: Book;
@@ -16,7 +12,7 @@ interface BookModalProps {
 }
 
 const BookModal: React.FC<BookModalProps> = ({ book, onClose }) => {
-  const [completedDate, setCompletedDate] = useState('');
+  const [completedDate, setCompletedDate] = useState("");
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -38,13 +34,14 @@ const BookModal: React.FC<BookModalProps> = ({ book, onClose }) => {
     }
 
     console.log(`書籍名 : "${book.title}" 読了日 : ${completedDate}`);
-    
+
     try {
-      await addDoc(collection(db, 'books'), {
+      await addDoc(collection(db, "books"), {
         createdAt: serverTimestamp(),
         date: completedDate,
         img_url: book.image,
         name: book.title,
+        pages: book.pageCount,
         userId: user.uid,
       });
       onClose();
@@ -58,7 +55,10 @@ const BookModal: React.FC<BookModalProps> = ({ book, onClose }) => {
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
         <h2 className="text-lg font-semibold">{book.title}</h2>
         <div className="mt-4">
-          <label htmlFor="completedDate" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="completedDate"
+            className="block text-sm font-medium text-gray-700"
+          >
             読了日
           </label>
           <input

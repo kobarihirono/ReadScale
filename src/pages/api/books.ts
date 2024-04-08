@@ -22,14 +22,10 @@ export default async function handler(
     const data = await getData(q);
     res.status(200).json(data);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        error:
-          error instanceof Error
-            ? error.message
-            : "An unexpected error occurred",
-      });
+    res.status(500).json({
+      error:
+        error instanceof Error ? error.message : "An unexpected error occurred",
+    });
   }
 }
 

@@ -2,7 +2,6 @@ import { Book } from "../../app/types/index";
 
 type AppProps = { book: Book };
 const BookItem = ({ book }: AppProps) => {
-
   return (
     <div>
       <>{book.image ? <img src={book.image} /> : <div>No Image</div>}</>
