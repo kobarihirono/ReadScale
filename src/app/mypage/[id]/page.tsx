@@ -1,10 +1,10 @@
 // src/app/my-page/[id]/page.tsx
-'use client'
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { User, getAuth, onAuthStateChanged } from "firebase/auth";
-import { auth } from '@/lib/firebase/config';
+import { auth } from "@/lib/firebase/config";
 
 const MyPage = () => {
   const [loading, setLoading] = useState(true);
@@ -19,7 +19,7 @@ const MyPage = () => {
         setLoading(false);
       } else {
         // ユーザーがログインしていない場合、サインインページにリダイレクト
-        router.push('/signin');
+        router.push("/signin");
       }
     });
 
