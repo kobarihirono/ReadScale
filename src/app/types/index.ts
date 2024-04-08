@@ -5,6 +5,7 @@ export interface Book {
   title: string;
   description: string;
   pageCount: number | null;
+  publishedDate: string | null;
   image: string;
   mainCategory: string;
   categories: string[];

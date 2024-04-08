@@ -10,6 +10,7 @@ import { Book } from "../../app/types/index";
  * @param req リクエスト
  * @param res レスポンス
  */
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Book[] | { error: string }>,
@@ -42,7 +43,7 @@ async function getData(query: string): Promise<Book[]> {
   const response = await fetch(
     "https://www.googleapis.com/books/v1/volumes?q=" +
       encodeURIComponent(query) +
-      "&maxResults=20",
+      "&maxResults=5",
   );
 
   if (!response.ok) {
@@ -59,7 +60,8 @@ async function getData(query: string): Promise<Book[]> {
     id: elem.id,
     title: elem.volumeInfo.title,
     description: elem.volumeInfo?.description,
-    pageCount: elem.pageCount,
+    pageCount: elem.volumeInfo?.pageCount,
+    publishedDate: elem.volumeInfo.publishedDate,
     image: elem.volumeInfo.imageLinks?.thumbnail,
     mainCategory: elem.volumeInfo.mainCategory,
     categories: elem.volumeInfo.categories,

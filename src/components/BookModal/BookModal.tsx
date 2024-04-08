@@ -1,7 +1,14 @@
 // components/BookModal/BookModal.tsx
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Book } from '../../app/types/index';
+import { User, onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "@/lib/firebase/config";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+} from "firebase/firestore";
 
 interface BookModalProps {
   book: Book;
@@ -10,14 +17,40 @@ interface BookModalProps {
 
 const BookModal: React.FC<BookModalProps> = ({ book, onClose }) => {
   const [completedDate, setCompletedDate] = useState('');
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser); // ログインしているユーザー情報をセット
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCompletedDate(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!user) {
+      console.error("ユーザーがログインしていません。");
+      return;
+    }
+
     console.log(`書籍名 : "${book.title}" 読了日 : ${completedDate}`);
-    onClose();
+    
+    try {
+      await addDoc(collection(db, 'books'), {
+        createdAt: serverTimestamp(),
+        date: completedDate,
+        img_url: book.image,
+        name: book.title,
+        userId: user.uid,
+      });
+      onClose();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
   };
 
   return (
