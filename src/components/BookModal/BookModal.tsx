@@ -88,20 +88,34 @@ const BookModal: React.FC<BookModalProps> = ({
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
         <h2 className="text-lg font-semibold">{book.title}</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
-          <label htmlFor="completedDate" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="completedDate"
+            className="block text-sm font-medium text-gray-700"
+          >
             読了日
           </label>
           <input
             type="date"
-            {...register("completedDate", { required: "読了日を入力してください" })}
+            {...register("completedDate", {
+              required: "読了日を入力してください",
+            })}
             className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3 shadow-sm focus:outline-none sm:text-sm"
           />
-          {errors.completedDate && <p className="text-red-500">{errors.completedDate.message}</p>}
+          {errors.completedDate && (
+            <p className="text-red-500">{errors.completedDate.message}</p>
+          )}
           <div className="mt-4 flex justify-end">
-            <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
               {isEditing ? "更新" : "登録"}
             </button>
-            <button onClick={onClose} type="button" className="ml-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+            <button
+              onClick={onClose}
+              type="button"
+              className="ml-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+            >
               閉じる
             </button>
           </div>

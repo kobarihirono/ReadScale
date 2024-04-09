@@ -6,7 +6,12 @@ export interface Book {
   description: string;
   pageCount: number | null;
   publishedDate: string | null;
-  image: string;
+  image: string | null;
   mainCategory: string;
   categories: string[];
+
+  date: string;
+  name: string;
+  pages: number | null;
+  img_url: string;
 }

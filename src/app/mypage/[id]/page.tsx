@@ -14,18 +14,19 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase/config";
 import BookModal from "../../../components/BookModal/BookModal";
+import { Book } from "../../types/index";
 
 const MyPage = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [user, setUser] = useState<User | null>(null);
-  const [books, setBooks] = useState([]);
-  const [totalHeight, setTotalHeight] = useState(0);
+  const [books, setBooks] = useState<Book[]>([]);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingBook, setEditingBook] = useState(null);
+  const [totalHeight, setTotalHeight] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [editingBook, setEditingBook] = useState<Book | null>(null);
   const router = useRouter();
 
-  const deleteBook = async (bookId: string) => {
+  const deleteBook = async (bookId: string): Promise<void> => {
     const bookDocRef = doc(db, "books", bookId);
     try {
       await deleteDoc(bookDocRef);
@@ -38,7 +39,7 @@ const MyPage = () => {
       console.error("Error deleting book: ", error);
     }
   };
-  const updateTotalHeight = (books) => {
+  const updateTotalHeight = (books: Book[]): void => {
     const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
     const heightPerBookPage = 0.2;
     const totalHeight =
@@ -46,12 +47,12 @@ const MyPage = () => {
     setTotalHeight(totalHeight);
   };
 
-  const handleEdit = (book) => {
+  const handleEdit = (book: Book): void => {
     setEditingBook(book);
     setIsModalOpen(true);
   };
 
-  const handleBookUpdate = (updatedBook) => {
+  const handleBookUpdate = (updatedBook: Book): void => {
     setBooks((prevBooks) =>
       prevBooks.map((book) =>
         book.id === updatedBook.id ? { ...book, date: updatedBook.date } : book,
@@ -60,7 +61,7 @@ const MyPage = () => {
     updateTotalHeight(books);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (): void => {
     setIsModalOpen(false);
     setEditingBook(null);
   };
@@ -77,9 +78,9 @@ const MyPage = () => {
             where("userId", "==", currentUser.uid),
           );
           const querySnapshot = await getDocs(q);
-          const userBooks = querySnapshot.docs.map((doc) => ({
+          const userBooks: Book[] = querySnapshot.docs.map((doc) => ({
+            ...(doc.data() as Book),
             id: doc.id,
-            ...doc.data(),
           }));
           setBooks(userBooks);
           updateTotalHeight(userBooks);
@@ -122,7 +123,7 @@ const MyPage = () => {
                 ))}
               </ul>
             ) : (
-              <p>You have no books registered.</p>
+              <p>現在、登録した書籍はありません</p>
             )}
           </div>
         </div>
