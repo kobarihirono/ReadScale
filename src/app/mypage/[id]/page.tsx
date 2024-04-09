@@ -1,7 +1,7 @@
 // src/app/my-page/[id]/page.tsx
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { User, onAuthStateChanged } from "firebase/auth";
 import {
@@ -69,8 +69,10 @@ const MyPage = () => {
     setEditingBook(null);
   };
 
-  const uploadProfileImage = async (e) => {
-    const file = e.target.files[0]; // 選択されたファイルを取得
+  const uploadProfileImage = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
+    // ユーザーがログインしていない場合は処理を中断
+    if (!user) return;
+    const file = e.target.files?.[0]; // 選択されたファイルを取得
     if (!file) return;
 
     const storage = getStorage();
@@ -85,7 +87,7 @@ const MyPage = () => {
     }
   };
 
-  const loadProfileImage = async (currentUser) => {
+  const loadProfileImage = async (currentUser: User | null): Promise<void> => {
     if (!currentUser) return;
 
     const storage = getStorage();
