@@ -1,7 +1,7 @@
 // src/app/my-page/[id]/page.tsx
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { User, onAuthStateChanged } from "firebase/auth";
 import {
@@ -9,49 +9,68 @@ import {
   query,
   where,
   getDocs,
-  updateDoc,
   deleteDoc,
   doc,
 } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase/config";
+import BookModal from "../../../components/BookModal/BookModal";
 
 const MyPage = () => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const [books, setBooks] = useState([]);
   const [totalHeight, setTotalHeight] = useState(0);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingBook, setEditingBook] = useState(null);
   const router = useRouter();
 
-  // 書籍データを削除する関数
   const deleteBook = async (bookId: string) => {
     const bookDocRef = doc(db, "books", bookId);
     try {
       await deleteDoc(bookDocRef);
-      setBooks(books.filter((book) => book.id !== bookId));
+      // 書籍リストから削除された書籍をフィルタリング
+      const updatedBooks = books.filter((book) => book.id !== bookId);
+      setBooks(updatedBooks);
+      // 更新された書籍リストで累計の高さを再計算
+      updateTotalHeight(updatedBooks);
     } catch (error) {
       console.error("Error deleting book: ", error);
     }
   };
-
-  // ページ数の合計に基づいて累計の高さを更新する関数
   const updateTotalHeight = (books) => {
     const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
-    // 1ページの厚みを0.2mmと仮定
-    const heightPerBookPage = 0.2; // mm
+    const heightPerBookPage = 0.2;
     const totalHeight =
       Math.floor(((totalPages * heightPerBookPage) / 10) * 100) / 100;
     setTotalHeight(totalHeight);
   };
 
-  // ユーザー情報と書籍データを取得する処理
+  const handleEdit = (book) => {
+    setEditingBook(book);
+    setIsModalOpen(true);
+  };
+
+  const handleBookUpdate = (updatedBook) => {
+    setBooks((prevBooks) =>
+      prevBooks.map((book) =>
+        book.id === updatedBook.id ? { ...book, date: updatedBook.date } : book,
+      ),
+    );
+    updateTotalHeight(books);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingBook(null);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        // ユーザーがログインしている場合、ユーザー情報をセット
         setUser(currentUser);
         setLoading(false);
 
-        // ログインユーザーに紐づく書籍データを取得する
         const fetchBooks = async () => {
           const q = query(
             collection(db, "books"),
@@ -72,7 +91,6 @@ const MyPage = () => {
       }
     });
 
-    // コンポーネントのアンマウント時にリスナーを解除
     return () => unsubscribe();
   }, [router]);
 
@@ -99,7 +117,7 @@ const MyPage = () => {
                     <p>ページ数: {book.pages}</p>
                     <img src={book.img_url} alt={book.name} />
                     <button onClick={() => deleteBook(book.id)}>削除</button>
-                    <button>編集</button>
+                    <button onClick={() => handleEdit(book)}>編集</button>
                   </li>
                 ))}
               </ul>
@@ -108,6 +126,18 @@ const MyPage = () => {
             )}
           </div>
         </div>
+      )}
+      {isModalOpen && editingBook && (
+        <BookModal
+          book={editingBook}
+          onClose={handleCloseModal}
+          isEditing={true}
+          editingBookData={{
+            id: editingBook.id,
+            completedDate: editingBook.date,
+          }}
+          onBookUpdate={handleBookUpdate}
+        />
       )}
     </div>
   );
