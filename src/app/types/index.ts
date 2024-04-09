@@ -12,6 +12,6 @@ export interface Book {
 
   date: string;
   name: string;
-  pages: number | null;
+  pages: number;
   img_url: string;
 }

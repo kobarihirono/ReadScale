@@ -15,6 +15,7 @@ import {
 import { auth, db } from "@/lib/firebase/config";
 import BookModal from "../../../components/BookModal/BookModal";
 import { Book } from "../../types/index";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const MyPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -24,6 +25,7 @@ const MyPage = () => {
   const [totalHeight, setTotalHeight] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [editingBook, setEditingBook] = useState<Book | null>(null);
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
   const router = useRouter();
 
   const deleteBook = async (bookId: string): Promise<void> => {
@@ -39,6 +41,7 @@ const MyPage = () => {
       console.error("Error deleting book: ", error);
     }
   };
+
   const updateTotalHeight = (books: Book[]): void => {
     const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
     const heightPerBookPage = 0.2;
@@ -66,11 +69,48 @@ const MyPage = () => {
     setEditingBook(null);
   };
 
+  const uploadProfileImage = async (e) => {
+    const file = e.target.files[0]; // 選択されたファイルを取得
+    if (!file) return;
+
+    const storage = getStorage();
+    const storageRef = ref(storage, `profileImages/${user.uid}/avatar.jpg`);
+
+    try {
+      await uploadBytes(storageRef, file); // Firebase Storageにファイルをアップロード
+      const photoURL = await getDownloadURL(storageRef); // アップロードされた画像のURLを取得
+      console.log("Uploaded a blob or file!", photoURL);
+    } catch (error) {
+      console.error("Upload failed", error);
+    }
+  };
+
+  const loadProfileImage = async (currentUser) => {
+    if (!currentUser) return;
+
+    const storage = getStorage();
+    const storageRef = ref(
+      storage,
+      `profileImages/${currentUser.uid}/avatar.jpg`,
+    );
+
+    try {
+      const url = await getDownloadURL(storageRef);
+      setProfileImageUrl(url);
+    } catch (error) {
+      console.error("Failed to load profile image", error);
+    }
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
+        // ユーザー情報をセット
         setUser(currentUser);
+        // ローディング状態を解除
         setLoading(false);
+        // プロファイル画像の読み込み
+        loadProfileImage(currentUser);
 
         const fetchBooks = async () => {
           const q = query(
@@ -95,6 +135,7 @@ const MyPage = () => {
     return () => unsubscribe();
   }, [router]);
 
+  // ローディング
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -102,6 +143,8 @@ const MyPage = () => {
   return (
     <div>
       <h1>My Page</h1>
+      <input type="file" accept="image/*" onChange={uploadProfileImage} />
+      {profileImageUrl && <img src={profileImageUrl} alt="プロファイル画像" />}
       {user && (
         <div>
           <p>Username: {user.displayName}</p>
