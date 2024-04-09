@@ -81,6 +81,7 @@ const MyPage = () => {
     try {
       await uploadBytes(storageRef, file); // Firebase Storageにファイルをアップロード
       const photoURL = await getDownloadURL(storageRef); // アップロードされた画像のURLを取得
+      setProfileImageUrl(photoURL);
       console.log("Uploaded a blob or file!", photoURL);
     } catch (error) {
       console.error("Upload failed", error);
