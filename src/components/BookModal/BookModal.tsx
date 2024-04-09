@@ -1,8 +1,10 @@
 // components/BookModal/BookModal.tsx
+
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { onAuthStateChanged, User } from "firebase/auth";
 import {
   doc,
@@ -10,9 +12,13 @@ import {
   addDoc,
   collection,
   serverTimestamp,
+  query,
+  where,
+  getDocs,
 } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase/config";
 import { Book } from "../../app/types/index";
+import { useToast } from "@/common/design";
 
 interface BookModalProps {
   book: Book;
@@ -25,6 +31,20 @@ interface BookModalProps {
   onBookUpdate?: (updatedBook: Book) => void;
 }
 
+const checkBookUnique = async (
+  userId: string,
+  bookName: string,
+): Promise<boolean> => {
+  const booksRef = collection(db, "books");
+  const q = query(
+    booksRef,
+    where("userId", "==", userId),
+    where("name", "==", bookName),
+  );
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.empty; // 書籍が存在しない場合はtrue、存在する場合はfalseを返す
+};
+
 const BookModal: React.FC<BookModalProps> = ({
   book,
   onClose,
@@ -33,11 +53,13 @@ const BookModal: React.FC<BookModalProps> = ({
   onBookUpdate,
 }) => {
   const [user, setUser] = useState<User | null>(null);
+  const toast = useToast();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm({
     defaultValues: {
       completedDate: editingBookData?.completedDate || "",
@@ -51,7 +73,29 @@ const BookModal: React.FC<BookModalProps> = ({
 
   const onSubmit = async (data: { completedDate: string }) => {
     if (!user) {
-      console.error("ユーザーがログインしていません。");
+      toast({
+        title: "エラー",
+        description: "ユーザーがログインしていません。",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+
+      router.push("/signin");
+      
+      return;
+    }
+
+    const isUnique = await checkBookUnique(user.uid, book.title);
+    if (!isUnique) {
+      toast({
+        title: "エラー",
+        description: "この書籍は既に登録されています。",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+
       return;
     }
 
