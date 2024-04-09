@@ -1,27 +1,31 @@
 // src/pages/api/books.ts
 
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { Book } from '../../app/types/index';
+import type { NextApiRequest, NextApiResponse } from "next";
+import { Book } from "../../app/types/index";
 
 /**
  * Google Books API で鬼滅関連の書籍を検索する関数
  * [GET]/api/books
- * 
+ *
  * @param req リクエスト
  * @param res レスポンス
  */
+
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Book[] | { error: string }>
+  res: NextApiResponse<Book[] | { error: string }>,
 ) {
-  let q = req.query.q || ""
-  q = Array.isArray(q) ? q[0] : q
+  let q = req.query.q || "";
+  q = Array.isArray(q) ? q[0] : q;
 
   try {
-    const data = await getData(q)
-    res.status(200).json(data)
+    const data = await getData(q);
+    res.status(200).json(data);
   } catch (error) {
-    res.status(500).json({ error: error instanceof Error ? error.message : "An unexpected error occurred" })
+    res.status(500).json({
+      error:
+        error instanceof Error ? error.message : "An unexpected error occurred",
+    });
   }
 }
 
@@ -32,13 +36,17 @@ export default async function handler(
  * @returns 見つかった書籍のリスト
  */
 async function getData(query: string): Promise<Book[]> {
-  const response = await fetch("https://www.googleapis.com/books/v1/volumes?q=" + encodeURIComponent(query) + "&maxResults=20")
+  const response = await fetch(
+    "https://www.googleapis.com/books/v1/volumes?q=" +
+      encodeURIComponent(query) +
+      "&maxResults=5",
+  );
 
   if (!response.ok) {
     throw new Error(`API call failed with status: ${response.status}`);
   }
 
-  const jsonData = await response.json()
+  const jsonData = await response.json();
 
   if (!jsonData.items) {
     throw new Error("No items found in the API response");
@@ -48,7 +56,8 @@ async function getData(query: string): Promise<Book[]> {
     id: elem.id,
     title: elem.volumeInfo.title,
     description: elem.volumeInfo?.description,
-    pageCount: elem.pageCount,
+    pageCount: elem.volumeInfo?.pageCount,
+    publishedDate: elem.volumeInfo.publishedDate,
     image: elem.volumeInfo.imageLinks?.thumbnail,
     mainCategory: elem.volumeInfo.mainCategory,
     categories: elem.volumeInfo.categories,

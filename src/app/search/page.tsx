@@ -1,16 +1,18 @@
 // search/page.tsx
 "use client";
 
-import React, { SyntheticEvent, useState } from 'react';
-import type { NextPage } from 'next';
-import BookItem from '../../components/BookItem/BookItem';
-import { Book } from '../types/index';
-import MypageButton from '@/components/Button/MypageButton';
+import React, { SyntheticEvent, useState } from "react";
+import type { NextPage } from "next";
+import BookItem from "../../components/BookItem/BookItem";
+import BookModal from "../../components/BookModal/BookModal";
+import { Book } from "../types/index";
+import MypageButton from "@/components/Button/MypageButton";
 
 const BookSearch: NextPage = () => {
-  const [query, setQuery] = useState(""); 
+  const [query, setQuery] = useState("");
   const [items, setItems] = useState<Book[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
   const onClickSearch = async (e: SyntheticEvent) => {
     e.preventDefault(); // フォーム送信によるページのリロードを防ぐ
@@ -29,23 +31,26 @@ const BookSearch: NextPage = () => {
     }
   };
 
+  const closeModal = () => setSelectedBook(null);
+
   return (
     <div>
       <MypageButton />
       <input
         type="text"
         value={query}
-        onChange={e => setQuery(e.target.value)}
+        onChange={(e) => setQuery(e.target.value)}
       />
       <button onClick={onClickSearch}>検索</button>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {error && <div style={{ color: "red" }}>{error}</div>}
       <ul>
         {items.map((item, index) => (
-          <li key={index}>
+          <li key={index} onClick={() => setSelectedBook(item)}>
             <BookItem book={item} />
           </li>
         ))}
       </ul>
+      {selectedBook && <BookModal book={selectedBook} onClose={closeModal} />}
     </div>
   );
 };
