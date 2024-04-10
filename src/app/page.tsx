@@ -5,7 +5,7 @@ export default function HomeScreen() {
   return (
     <div className="text-center p-4">
       {/* 画像が読み込めない */}
-      {/* <Image src="/top.png" alt="bookshelf" width={150} height={150} /> */}
+      {/* <Image src="/images/top.png" alt="bookshelf" width={150} height={150} /> */}
       <p className="mb-4">
         読書という冒険を、
         <br />

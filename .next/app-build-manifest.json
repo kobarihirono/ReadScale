@@ -21,6 +21,11 @@
       "static/chunks/main-app.js",
       "static/chunks/app/signin/page.js"
     ],
+    "/forgot_password/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/forgot_password/page.js"
+    ],
     "/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
