@@ -128,13 +128,15 @@ export default function SignInScreen() {
             <Button
               marginTop="4"
               color="white"
-              bg="teal.400"
+              bg="blue.700"
               isLoading={isSubmitting}
               type="submit"
-              paddingX="auto"
+              py="2"
+              px="8"
+              rounded="full"
               _hover={{
                 borderColor: "transparent",
-                boxShadow: "0 7px 10px rgba(0, 0, 0, 0.3)",
+                bg: "blue.600",
               }}
             >
               ログイン

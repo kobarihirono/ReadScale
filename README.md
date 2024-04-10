@@ -56,7 +56,11 @@
 
 - **DB**
 
-  - Firestore
+  - Cloud Firestore
+
+- **ストレージ**
+
+  - Cloud Storage for Firebase
 
 - **認証**
 

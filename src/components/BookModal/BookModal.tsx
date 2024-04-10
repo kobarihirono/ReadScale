@@ -82,7 +82,7 @@ const BookModal: React.FC<BookModalProps> = ({
       });
 
       router.push("/signin");
-      
+
       return;
     }
 

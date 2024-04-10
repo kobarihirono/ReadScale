@@ -69,7 +69,9 @@ const MyPage = () => {
     setEditingBook(null);
   };
 
-  const uploadProfileImage = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
+  const uploadProfileImage = async (
+    e: ChangeEvent<HTMLInputElement>,
+  ): Promise<void> => {
     // ユーザーがログインしていない場合は処理を中断
     if (!user) return;
     const file = e.target.files?.[0]; // 選択されたファイルを取得
