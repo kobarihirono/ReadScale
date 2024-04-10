@@ -4,7 +4,7 @@
 import React, { SyntheticEvent, useState } from "react";
 import type { NextPage } from "next";
 import BookItem from "../../components/BookItem/BookItem";
-import BookModal from "../../components/BookModal/BookModal";
+import AddBookModal from "../../components/BookModal/AddBookModal";
 import { Book } from "../types/index";
 import MypageButton from "@/components/Button/MypageButton";
 
@@ -72,7 +72,9 @@ const BookSearch: NextPage = () => {
           </li>
         ))}
       </ul>
-      {selectedBook && <BookModal book={selectedBook} onClose={closeModal} />}
+      {selectedBook && (
+        <AddBookModal book={selectedBook} onClose={closeModal} />
+      )}
     </div>
   );
 };

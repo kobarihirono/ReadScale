@@ -13,9 +13,9 @@ import {
   doc,
 } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase/config";
-import BookModal from "../../../components/BookModal/BookModal";
 import { Book } from "../../types/index";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import EditBookModal from "@/components/BookModal/EditModal";
 
 const MyPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -32,10 +32,8 @@ const MyPage = () => {
     const bookDocRef = doc(db, "books", bookId);
     try {
       await deleteDoc(bookDocRef);
-      // 書籍リストから削除された書籍をフィルタリング
       const updatedBooks = books.filter((book) => book.id !== bookId);
       setBooks(updatedBooks);
-      // 更新された書籍リストで累計の高さを再計算
       updateTotalHeight(updatedBooks);
     } catch (error) {
       console.error("Error deleting book: ", error);
@@ -53,6 +51,7 @@ const MyPage = () => {
   const handleEdit = (book: Book): void => {
     setEditingBook(book);
     setIsModalOpen(true);
+    console.log("Editing book: ", book);
   };
 
   const handleBookUpdate = (updatedBook: Book): void => {
@@ -61,7 +60,6 @@ const MyPage = () => {
         book.id === updatedBook.id ? { ...book, date: updatedBook.date } : book,
       ),
     );
-    updateTotalHeight(books);
   };
 
   const handleCloseModal = (): void => {
@@ -72,17 +70,16 @@ const MyPage = () => {
   const uploadProfileImage = async (
     e: ChangeEvent<HTMLInputElement>,
   ): Promise<void> => {
-    // ユーザーがログインしていない場合は処理を中断
     if (!user) return;
-    const file = e.target.files?.[0]; // 選択されたファイルを取得
+    const file = e.target.files?.[0];
     if (!file) return;
 
     const storage = getStorage();
     const storageRef = ref(storage, `profileImages/${user.uid}/avatar.jpg`);
 
     try {
-      await uploadBytes(storageRef, file); // Firebase Storageにファイルをアップロード
-      const photoURL = await getDownloadURL(storageRef); // アップロードされた画像のURLを取得
+      await uploadBytes(storageRef, file);
+      const photoURL = await getDownloadURL(storageRef);
       setProfileImageUrl(photoURL);
       console.log("Uploaded a blob or file!", photoURL);
     } catch (error) {
@@ -109,12 +106,9 @@ const MyPage = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        // ユーザー情報をセット
+      if (currentUser && currentUser.uid) {
         setUser(currentUser);
-        // ローディング状態を解除
         setLoading(false);
-        // プロファイル画像の読み込み
         loadProfileImage(currentUser);
 
         const fetchBooks = async () => {
@@ -140,33 +134,79 @@ const MyPage = () => {
     return () => unsubscribe();
   }, [router]);
 
-  // ローディング
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <h1>My Page</h1>
-      <input type="file" accept="image/*" onChange={uploadProfileImage} />
-      {profileImageUrl && <img src={profileImageUrl} alt="プロファイル画像" />}
+    <div className="p-6">
+      <div className="flex justify-center">
+        {profileImageUrl && (
+          <img
+            className="rounded-full w-1/3 shadow-lg border-2 border-gray-300"
+            src={profileImageUrl}
+            alt="プロファイル画像"
+          />
+        )}
+      </div>
       {user && (
         <div>
-          <p>Username: {user.displayName}</p>
-          <p>Email: {user.email}</p>
-          <p>積み上げの高さ: {totalHeight} cm</p>
+          <div className="text-center font-bold text-gray-700">
+            <p className="mt-6">{user.displayName}</p>
+            <p className="mt-2">{user.email}</p>
+            <div className="flex justify-center">
+              <p className="mt-4 border-2 w-2/3 p-6 rounded-xl">
+                積み上げの高さ: {totalHeight} cm
+              </p>
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={uploadProfileImage}
+              className="file:shadow file:border-none file:py-2 file:px-4 file:rounded-full file:bg-blue-500 file:text-white file:cursor-pointer"
+            />
+          </div>
           <div>
-            <h2>登録書籍一覧</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mt-10">
+              登録書籍一覧
+            </h2>
             {books.length > 0 ? (
-              <ul>
+              <ul className="space-y-4">
                 {books.map((book) => (
-                  <li key={book.id}>
-                    <p>書籍名: {book.name}</p>
-                    <p>読了日: {book.date}</p>
-                    <p>ページ数: {book.pages}</p>
-                    <img src={book.img_url} alt={book.name} />
-                    <button onClick={() => deleteBook(book.id)}>削除</button>
-                    <button onClick={() => handleEdit(book)}>編集</button>
+                  <li key={book.id} className="bg-white p-4 shadow rounded-lg">
+                    <div className="book-item flex">
+                      <img
+                        src={book.img_url}
+                        alt={book.name}
+                        className="rounded"
+                      />
+                      <div className="flex justify-between flex-col">
+                        <div>
+                          <div className="flex flex-col ml-6">
+                            <p className="text-gray-700">書籍名: {book.name}</p>
+                            <p className="text-gray-700">読了日: {book.date}</p>
+                            <p className="text-gray-700 mb-4">
+                              ページ数: {book.pages}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex justify-end">
+                          <button
+                            onClick={() => deleteBook(book.id)}
+                            className="px-4 py-2 bg-gray-400 text-white font-bold rounded-full hover:bg-hover_button"
+                          >
+                            削除
+                          </button>
+                          <button
+                            onClick={() => handleEdit(book)}
+                            className="px-4 py-2 bg-deepGreen text-white font-bold rounded-full hover:bg-hover_button ml-2"
+                          >
+                            編集
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    {/* .book-item */}
                   </li>
                 ))}
               </ul>
@@ -177,14 +217,10 @@ const MyPage = () => {
         </div>
       )}
       {isModalOpen && editingBook && (
-        <BookModal
-          book={editingBook}
+        <EditBookModal
+          bookId={editingBook.id}
+          currentCompletedDate={editingBook.date}
           onClose={handleCloseModal}
-          isEditing={true}
-          editingBookData={{
-            id: editingBook.id,
-            completedDate: editingBook.date,
-          }}
           onBookUpdate={handleBookUpdate}
         />
       )}
