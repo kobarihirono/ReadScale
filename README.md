@@ -39,7 +39,7 @@
 
   - HTML
   - CSS
-  - Javascript
+  - Typescript
 
 - **ライブラリ**
 
