@@ -501,6 +501,33 @@ video {
 .inset-0 {
   inset: 0px;
 }
+.m-2 {
+  margin: 0.5rem;
+}
+.m-16 {
+  margin: 4rem;
+}
+.m-1 {
+  margin: 0.25rem;
+}
+.m-10 {
+  margin: 2.5rem;
+}
+.-m-2 {
+  margin: -0.5rem;
+}
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.my-10 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+.mx-10 {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -513,17 +540,44 @@ video {
 .mt-4 {
   margin-top: 1rem;
 }
+.mr-4 {
+  margin-right: 1rem;
+}
+.mt-10 {
+  margin-top: 2.5rem;
+}
+.mt-8 {
+  margin-top: 2rem;
+}
+.mt-5 {
+  margin-top: 1.25rem;
+}
 .block {
   display: block;
 }
 .flex {
   display: flex;
 }
+.h-48 {
+  height: 12rem;
+}
 .w-full {
   width: 100%;
 }
+.w-36 {
+  width: 9rem;
+}
 .max-w-md {
   max-width: 28rem;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex-wrap {
+  flex-wrap: wrap;
 }
 .items-center {
   align-items: center;
@@ -533,6 +587,9 @@ video {
 }
 .justify-center {
   justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
 }
 .rounded {
   border-radius: 0.25rem;
@@ -552,6 +609,10 @@ video {
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+.border-gray-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 .bg-black {
   --tw-bg-opacity: 1;
@@ -576,11 +637,18 @@ video {
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
+.object-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
 .p-4 {
   padding: 1rem;
 }
 .p-6 {
   padding: 1.5rem;
+}
+.p-2 {
+  padding: 0.5rem;
 }
 .px-3 {
   padding-left: 0.75rem;
@@ -633,6 +701,10 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
 }
 .shadow-lg {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -699,9 +771,50 @@ body {
 
 @media (min-width: 640px) {
 
+  .sm\:w-1\/2 {
+    width: 50%;
+  }
+
+  .sm\:flex-col {
+    flex-direction: column;
+  }
+
   .sm\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .md\:w-1\/3 {
+    width: 33.333333%;
+  }
+
+  .md\:w-1\/2 {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  .lg\:w-1\/4 {
+    width: 25%;
+  }
+
+  .lg\:w-1\/3 {
+    width: 33.333333%;
+  }
+}
+
+@media (min-width: 1280px) {
+
+  .xl\:w-1\/5 {
+    width: 20%;
+  }
+
+  .xl\:w-1\/3 {
+    width: 33.333333%;
   }
 }
 

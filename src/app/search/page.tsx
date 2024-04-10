@@ -43,9 +43,9 @@ const BookSearch: NextPage = () => {
       />
       <button onClick={onClickSearch}>検索</button>
       {error && <div style={{ color: "red" }}>{error}</div>}
-      <ul>
+      <ul className="flex flex-wrap">
         {items.map((item, index) => (
-          <li key={index} onClick={() => setSelectedBook(item)}>
+          <li className="p-2 w-full md:w-1/2 xl:w-1/3" key={index} onClick={() => setSelectedBook(item)}>
             <BookItem book={item} />
           </li>
         ))}
