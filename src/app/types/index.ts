@@ -17,3 +17,7 @@ export interface Book {
   pages: number;
   img_url: string;
 }
+
+export type FormData = {
+  email: string;
+};

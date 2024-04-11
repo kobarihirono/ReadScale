@@ -39,7 +39,7 @@ async function getData(query: string): Promise<Book[]> {
   const response = await fetch(
     "https://www.googleapis.com/books/v1/volumes?q=" +
       encodeURIComponent(query) +
-      "&maxResults=5",
+      "&maxResults=40",
   );
 
   if (!response.ok) {
