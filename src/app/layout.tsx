@@ -1,5 +1,7 @@
 import DesignProvider from "../common/providers/design_provider";
 import "./globals.css";
+import Header from "./Header";
+import Footer from "./Footer";
 
 import type { Metadata } from "next";
 
@@ -16,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
+        <Header />
         <DesignProvider>{children}</DesignProvider>
+        <Footer />
       </body>
     </html>
   );
