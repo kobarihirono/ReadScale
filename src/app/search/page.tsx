@@ -39,7 +39,6 @@ const BookSearch: NextPage = () => {
 
   return (
     <div>
-      <MypageButton />
       <input
         type="text"
         value={query}

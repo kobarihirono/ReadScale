@@ -15,6 +15,7 @@ const config: Config = {
         lightGreen: '#9AD0C2',
         yellowGreenBeige: '#F1FADA',
         backgroundWhite: '#F8F8F8',
+        mainFont: '#333333',
       },
     },
   },
