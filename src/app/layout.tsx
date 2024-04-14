@@ -2,6 +2,7 @@ import DesignProvider from "../common/providers/design_provider";
 import "./globals.css";
 import Header from "./Header";
 import Footer from "./Footer";
+import "../../global.css";
 
 import type { Metadata } from "next";
 
