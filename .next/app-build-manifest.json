@@ -31,10 +31,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/search/page.js"
     ],
-    "/not-found": [
+    "/forgot_password/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/not-found.js"
+      "static/chunks/app/forgot_password/page.js"
+    ],
+    "/signup/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/signup/page.js"
     ]
   }
 }

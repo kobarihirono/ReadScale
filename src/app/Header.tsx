@@ -27,12 +27,20 @@ const Header = () => {
     const result = await logout();
     if (result) {
       router.push('/signin');
+      handleMenuClose();
     } else {
       alert('ログアウトに失敗しました。');
     }
   };
 
-  if (!userId) return null;
+  if (!userId) return (
+    <header className="py-5 px-10 bg-navy flex justify-center items-center">
+      <div>
+        <h1 className="text-2xl text-white font-extrabold">Read Scale</h1>
+      </div>
+    </header>
+  
+  );
 
   return (
     <header className="py-5 px-10 bg-navy border-b flex justify-between items-center">
@@ -71,7 +79,7 @@ const Header = () => {
           className={
             isOpen
               ? "flex h-screen justify-center items-center flex-col gap-6 text-xl font-bold text-white"
-              : "block md:flex md:gap-8"
+              : "block md:flex md:gap-8 font-bold text-white pr-6"
           }
         >
           <li>
@@ -100,7 +108,7 @@ const Header = () => {
       <div>
         <h1 className="text-2xl text-white font-extrabold">Read Scale</h1>
       </div>
-      <div>
+      <div className="md:hidden">
         <Link href={`/mypage/${userId}`} passHref>
           <Image
             src="/icons/my-page.png"
