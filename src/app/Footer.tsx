@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="inset-x-0 bottom-0 py-2 px-10 border-t">
+    <footer className="inset-x-0 py-2 px-10 border-t">
       <div className="flex justify-between pt-4">
         <h1 className="text-2xl text-mainFont font-extrabold">Read Scale</h1>
         <nav>

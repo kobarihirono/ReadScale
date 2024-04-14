@@ -43,7 +43,7 @@ const Header = () => {
   );
 
   return (
-    <header className="py-5 px-10 bg-navy border-b flex justify-between items-center">
+    <header className="py-5 px-10 bg-navy border-b flex justify-between items-center md:flex-row-reverse">
       {/* ハンバーガーナビゲーション */}
       <button className="z-50 space-y-1.5 md:hidden" onClick={handleMenuOpen}>
         <span
@@ -72,14 +72,14 @@ const Header = () => {
         className={
           isOpen
             ? "z-40 bg-navy fixed top-0 right-0 bottom-0 left-0 h-screen flex flex-col"
-            : "fixed right-[-100%] md:right-4"
+            : "fixed right-[-100%] md:right-4 md:relative"
         }
       >
         <ul
           className={
             isOpen
               ? "flex h-screen justify-center items-center flex-col gap-6 text-xl font-bold text-white"
-              : "block md:flex md:gap-8 font-bold text-white pr-6"
+              : "block md:flex md:gap-8 font-bold text-white"
           }
         >
           <li>
