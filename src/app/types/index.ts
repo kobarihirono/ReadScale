@@ -16,6 +16,13 @@ export interface Book {
   name: string;
   pages: number;
   img_url: string;
+  userId: string;
+}
+
+export interface User {
+  uid: string;
+  displayName: string;
+  photoURL: string;
 }
 
 export type FormData = {

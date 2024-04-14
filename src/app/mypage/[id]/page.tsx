@@ -101,6 +101,7 @@ const MyPage = () => {
       setProfileImageUrl(url);
     } catch (error) {
       console.error("Failed to load profile image", error);
+      setProfileImageUrl("/icons/no-icon.png");
     }
   };
 

@@ -1,5 +1,10 @@
 /* 共通CSSを記載 */
 
+html, body {
+    color: #333;
+    height: 100%;
+}
+
 li {
     list-style-type: none;
 }
