@@ -526,6 +526,9 @@ video {
 .z-50 {
   z-index: 50;
 }
+.m-4 {
+  margin: 1rem;
+}
 .m-auto {
   margin: auto;
 }
@@ -594,6 +597,9 @@ video {
 .h-0\.5 {
   height: 0.125rem;
 }
+.h-32 {
+  height: 8rem;
+}
 .h-48 {
   height: 12rem;
 }
@@ -611,6 +617,9 @@ video {
 }
 .w-2\/3 {
   width: 66.666667%;
+}
+.w-32 {
+  width: 8rem;
 }
 .w-36 {
   width: 9rem;
@@ -662,6 +671,9 @@ video {
 }
 .justify-between {
   justify-content: space-between;
+}
+.gap-2 {
+  gap: 0.5rem;
 }
 .gap-6 {
   gap: 1.5rem;
@@ -791,6 +803,10 @@ video {
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
+}
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 .pt-4 {
   padding-top: 1rem;
