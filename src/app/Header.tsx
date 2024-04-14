@@ -26,21 +26,21 @@ const Header = () => {
   const handleLogout = async () => {
     const result = await logout();
     if (result) {
-      router.push('/signin');
+      router.push("/signin");
       handleMenuClose();
     } else {
-      alert('ログアウトに失敗しました。');
+      alert("ログアウトに失敗しました。");
     }
   };
 
-  if (!userId) return (
-    <header className="py-5 px-10 bg-navy flex justify-center items-center">
-      <div>
-        <h1 className="text-2xl text-white font-extrabold">Read Scale</h1>
-      </div>
-    </header>
-  
-  );
+  if (!userId)
+    return (
+      <header className="py-5 px-10 bg-navy flex justify-center items-center">
+        <div>
+          <h1 className="text-2xl text-white font-extrabold">Read Scale</h1>
+        </div>
+      </header>
+    );
 
   return (
     <header className="py-5 px-10 bg-navy border-b flex justify-between items-center md:flex-row-reverse">
@@ -83,7 +83,7 @@ const Header = () => {
           }
         >
           <li>
-            <Link onClick={handleMenuClose} href="/about">
+            <Link onClick={handleMenuClose} href="/timeline">
               タイムライン
             </Link>
           </li>
@@ -98,9 +98,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <button onClick={handleLogout}>
-              ログアウト
-            </button>
+            <button onClick={handleLogout}>ログアウト</button>
           </li>
         </ul>
       </nav>
