@@ -495,9 +495,6 @@ video {
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
-.static {
-  position: static;
-}
 .fixed {
   position: fixed;
 }
@@ -525,8 +522,17 @@ video {
 .mb-10 {
   margin-bottom: 2.5rem;
 }
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
 .mb-4 {
   margin-bottom: 1rem;
+}
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+.mb-8 {
+  margin-bottom: 2rem;
 }
 .ml-2 {
   margin-left: 0.5rem;
@@ -555,14 +561,11 @@ video {
 .mt-6 {
   margin-top: 1.5rem;
 }
-.mb-8 {
-  margin-bottom: 2rem;
+.mt-8 {
+  margin-top: 2rem;
 }
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-.mb-6 {
-  margin-bottom: 1.5rem;
+.mt-auto {
+  margin-top: auto;
 }
 .block {
   display: block;
@@ -585,11 +588,26 @@ video {
 .w-full {
   width: 100%;
 }
-.max-w-md {
-  max-width: 28rem;
+.w-auto {
+  width: auto;
+}
+.w-10\/12 {
+  width: 83.333333%;
+}
+.w-9\/12 {
+  width: 75%;
+}
+.w-8\/12 {
+  width: 66.666667%;
+}
+.w-6\/12 {
+  width: 50%;
 }
 .max-w-4xl {
   max-width: 56rem;
+}
+.max-w-md {
+  max-width: 28rem;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -699,9 +717,6 @@ video {
 .p-6 {
   padding: 1.5rem;
 }
-.p-5 {
-  padding: 1.25rem;
-}
 .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
@@ -726,13 +741,21 @@ video {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
 }
-.px-12 {
-  padding-left: 3rem;
-  padding-right: 3rem;
-}
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+.py-14 {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
 }
 .pt-4 {
   padding-top: 1rem;
@@ -798,6 +821,13 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+.underline {
+  text-decoration-line: underline;
 }
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
@@ -924,6 +954,18 @@ body {
   .md\:w-1\/2 {
     width: 50%;
   }
+
+  .md\:w-6\/12 {
+    width: 50%;
+  }
+
+  .md\:justify-end {
+    justify-content: flex-end;
+  }
+
+  .md\:justify-center {
+    justify-content: center;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -938,6 +980,10 @@ body {
 
   .lg\:flex-col {
     flex-direction: column;
+  }
+
+  .lg\:justify-normal {
+    justify-content: normal;
   }
 
   .lg\:justify-center {
@@ -956,6 +1002,10 @@ body {
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[11].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[11].oneOf[12].use[3]!./global.css ***!
   \********************************************************************************************************************************************************************************************************************************************************/
 /* 共通CSSを記載 */
+
+html {
+    color: #333;
+}
 
 li {
     list-style-type: none;
