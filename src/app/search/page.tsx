@@ -6,6 +6,7 @@ import type { NextPage } from "next";
 import BookItem from "../../components/BookItem/BookItem";
 import AddBookModal from "../../components/BookModal/AddBookModal";
 import { Book } from "../types/index";
+import Image from "next/image";
 
 const BookSearch: NextPage = () => {
   const [query, setQuery] = useState("");
@@ -13,7 +14,7 @@ const BookSearch: NextPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   // 検索時にデータの受け取りまでの時間が空くと、情報があっても一瞬検索結果が見つからないと表示される
-  const [hasSearched, setHasSearched] = useState<boolean>(true);
+  const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
   const onClickSearch = async (e: SyntheticEvent) => {
@@ -67,9 +68,9 @@ const BookSearch: NextPage = () => {
       </div>
     );
 
-  return (
-    <div className="py-8 m-auto w-11/12">
-      <div className="flex justify-center">
+return (
+  <div className="py-8 m-auto w-11/12">
+    <div className="flex justify-center">
       <input
         type="text"
         value={query}
@@ -83,31 +84,48 @@ const BookSearch: NextPage = () => {
       >
         検索
       </button>
-      </div>
-      {error && <div style={{ color: "red" }}>{error}</div>}
-      {items.length === 0 && !error && hasSearched && (
-        <div className="mt-6">
-          検索結果が見つかりませんでした。
-          <br />
-          別のワードで試してください。
-        </div>
-      )}
-      <ul className="flex flex-wrap">
-        {items.map((item, index) => (
-          <li
-            className="p-2 w-full md:w-1/2 xl:w-1/3"
-            key={index}
-            onClick={() => setSelectedBook(item)}
-          >
-            <BookItem book={item} />
-          </li>
-        ))}
-      </ul>
-      {selectedBook && (
-        <AddBookModal book={selectedBook} onClose={closeModal} />
-      )}
     </div>
-  );
+    {error && <div style={{ color: "red" }}>{error}</div>}
+    {items.length === 0 && !error && hasSearched && (
+      <div className="my-6 h-full">
+        <p>検索結果が見つかりませんでした。
+        <br />
+        別のワードで試してください。</p>
+        <Image
+          src="/images/search.png"
+          alt="読書をしている手の画像"
+          width={300}
+          height={300} />
+      </div>
+    )}
+    {items.length === 0 && !hasSearched && (
+      <div className="mt-6 text-center">
+        <p>キーワードを入力して検索してください。</p>
+        <div className="flex justify-center">
+        <Image
+          src="/images/search.png"
+          alt="本を開いている人の画像"
+          width={300}
+          height={300} />
+        </div>
+      </div>
+    )}
+    <ul className="flex flex-wrap">
+      {items.map((item, index) => (
+        <li
+          className="p-2 w-full md:w-1/2 xl:w-1/3"
+          key={index}
+          onClick={() => setSelectedBook(item)}
+        >
+          <BookItem book={item} />
+        </li>
+      ))}
+    </ul>
+    {selectedBook && (
+      <AddBookModal book={selectedBook} onClose={closeModal} />
+    )}
+  </div>
+);
 };
 
 export default BookSearch;

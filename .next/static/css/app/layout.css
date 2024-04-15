@@ -551,6 +551,10 @@ video {
   margin-left: auto;
   margin-right: auto;
 }
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -595,9 +599,6 @@ video {
 }
 .mt-8 {
   margin-top: 2rem;
-}
-.ml-4 {
-  margin-left: 1rem;
 }
 .block {
   display: block;
@@ -650,20 +651,11 @@ video {
 .w-6 {
   width: 1.5rem;
 }
-.w-full {
-  width: 100%;
-}
-.w-1\/12 {
-  width: 8.333333%;
-}
-.w-8\/12 {
-  width: 66.666667%;
-}
 .w-6\/12 {
   width: 50%;
 }
-.w-7\/12 {
-  width: 58.333333%;
+.w-full {
+  width: 100%;
 }
 .max-w-4xl {
   max-width: 56rem;
