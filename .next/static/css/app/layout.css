@@ -495,6 +495,17 @@ video {
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
 .fixed {
   position: fixed;
 }
@@ -539,6 +550,10 @@ video {
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 .mb-10 {
   margin-bottom: 2.5rem;
@@ -597,11 +612,17 @@ video {
 .h-0\.5 {
   height: 0.125rem;
 }
+.h-14 {
+  height: 3.5rem;
+}
 .h-32 {
   height: 8rem;
 }
 .h-48 {
   height: 12rem;
+}
+.h-full {
+  height: 100%;
 }
 .h-screen {
   height: 100vh;
@@ -615,6 +636,9 @@ video {
 .w-11\/12 {
   width: 91.666667%;
 }
+.w-14 {
+  width: 3.5rem;
+}
 .w-2\/3 {
   width: 66.666667%;
 }
@@ -626,6 +650,9 @@ video {
 }
 .w-6 {
   width: 1.5rem;
+}
+.w-6\/12 {
+  width: 50%;
 }
 .w-full {
   width: 100%;
@@ -647,6 +674,15 @@ video {
 .rotate-45 {
   --tw-rotate: 45deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+@keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -759,6 +795,9 @@ video {
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
+.fill-deepGreen {
+  fill: #2D9596;
+}
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
@@ -852,6 +891,10 @@ video {
 .text-deepGreen {
   --tw-text-opacity: 1;
   color: rgb(45 149 150 / var(--tw-text-opacity));
+}
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
 }
 .text-gray-600 {
   --tw-text-opacity: 1;
@@ -1068,6 +1111,14 @@ body {
 
   .xl\:w-1\/3 {
     width: 33.333333%;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+
+  .dark\:text-gray-600 {
+    --tw-text-opacity: 1;
+    color: rgb(75 85 99 / var(--tw-text-opacity));
   }
 }
 

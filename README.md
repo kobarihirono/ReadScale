@@ -119,5 +119,5 @@ scr/
 
 ## デザイン
 
-以下URLよりデザインの確認ができます。
+URLよりデザインの確認ができます。
 https://www.figma.com/file/I03ssWJsITenc7cu3pzURF/Read-Scale?type=design&node-id=0%3A1&mode=design&t=Y1cT0JqxrgaY8MpP-1
