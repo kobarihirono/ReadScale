@@ -41,7 +41,7 @@ const BookSearch: NextPage = () => {
 
   const closeModal = () => setSelectedBook(null);
 
-    // ローディング中はローディングアイコンを表示
+  // ローディング中はローディングアイコンを表示
   if (loading)
     return (
       <div
@@ -68,64 +68,68 @@ const BookSearch: NextPage = () => {
       </div>
     );
 
-return (
-  <div className="py-8 m-auto w-11/12">
-    <div className="flex justify-center">
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="px-4 py-2 border w-6/12 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button shadow-sm"
-        placeholder="キーワードを入力"
-      />
-      <button
-        onClick={onClickSearch}
-        className="px-4 py-2 bg-navy text-white font-bold rounded-full hover:bg-hover_button ml-2"
-      >
-        検索
-      </button>
-    </div>
-    {error && <div style={{ color: "red" }}>{error}</div>}
-    {items.length === 0 && !error && hasSearched && (
-      <div className="my-6 h-full">
-        <p>検索結果が見つかりませんでした。
-        <br />
-        別のワードで試してください。</p>
-        <Image
-          src="/images/search.png"
-          alt="読書をしている手の画像"
-          width={300}
-          height={300} />
-      </div>
-    )}
-    {items.length === 0 && !hasSearched && (
-      <div className="mt-6 text-center">
-        <p>キーワードを入力して検索してください。</p>
-        <div className="flex justify-center">
-        <Image
-          src="/images/search.png"
-          alt="本を開いている人の画像"
-          width={300}
-          height={300} />
-        </div>
-      </div>
-    )}
-    <ul className="flex flex-wrap">
-      {items.map((item, index) => (
-        <li
-          className="p-2 w-full md:w-1/2 xl:w-1/3"
-          key={index}
-          onClick={() => setSelectedBook(item)}
+  return (
+    <div className="py-8 m-auto w-11/12">
+      <div className="flex justify-center">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="px-4 py-2 border w-6/12 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button shadow-sm"
+          placeholder="キーワードを入力"
+        />
+        <button
+          onClick={onClickSearch}
+          className="px-4 py-2 bg-navy text-white font-bold rounded-full hover:bg-hover_button ml-2"
         >
-          <BookItem book={item} />
-        </li>
-      ))}
-    </ul>
-    {selectedBook && (
-      <AddBookModal book={selectedBook} onClose={closeModal} />
-    )}
-  </div>
-);
+          検索
+        </button>
+      </div>
+      {error && <div style={{ color: "red" }}>{error}</div>}
+      {items.length === 0 && !error && hasSearched && (
+        <div className="my-6 h-full">
+          <p>
+            検索結果が見つかりませんでした。
+            <br />
+            別のワードで試してください。
+          </p>
+          <Image
+            src="/images/search.png"
+            alt="読書をしている手の画像"
+            width={300}
+            height={300}
+          />
+        </div>
+      )}
+      {items.length === 0 && !hasSearched && (
+        <div className="mt-6 text-center">
+          <p>キーワードを入力して検索してください。</p>
+          <div className="flex justify-center">
+            <Image
+              src="/images/search.png"
+              alt="本を開いている人の画像"
+              width={300}
+              height={300}
+            />
+          </div>
+        </div>
+      )}
+      <ul className="flex flex-wrap">
+        {items.map((item, index) => (
+          <li
+            className="p-2 w-full md:w-1/2 xl:w-1/3"
+            key={index}
+            onClick={() => setSelectedBook(item)}
+          >
+            <BookItem book={item} />
+          </li>
+        ))}
+      </ul>
+      {selectedBook && (
+        <AddBookModal book={selectedBook} onClose={closeModal} />
+      )}
+    </div>
+  );
 };
 
 export default BookSearch;

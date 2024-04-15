@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Contact = () => {
   return (
@@ -17,6 +18,15 @@ const Contact = () => {
       >
         k.hirono0127@gmail.com
       </a>
+      <div className="flex md:justify-start mt-14 justify-center">
+        <Link
+          className="bg-navy text-white font-bold rounded-full py-2 px-8"
+          href="/"
+        >
+          トップへ戻る
+        </Link>
+      </div>
+
       <div className="flex md:justify-end justify-center mt-10">
         <div className="md:w-6/12">
           <Image

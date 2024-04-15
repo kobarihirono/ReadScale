@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Terms = () => {
   return (
@@ -84,6 +85,14 @@ const Terms = () => {
           </p>
         </li>
       </ul>
+      <div className="flex mt-14 justify-center">
+        <Link
+          className="bg-navy text-white font-bold rounded-full py-2 px-8"
+          href="/"
+        >
+          トップへ戻る
+        </Link>
+      </div>
     </div>
   );
 };
