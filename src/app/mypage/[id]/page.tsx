@@ -197,14 +197,29 @@ const MyPage = () => {
 
   return (
     <div className="p-6">
-      <div className="flex justify-center">
-        {profileImageUrl && (
-          <img
-            className="rounded-full w-1/3 shadow-lg border-2 border-gray-300"
-            src={profileImageUrl}
-            alt="プロファイル画像"
-          />
-        )}
+      <div className="flex justify-center items-center relative">
+        <div className="relative w-1/3">
+          {profileImageUrl && (
+            <img
+              className="rounded-full w-full shadow-lg border-2 border-gray-300"
+              src={profileImageUrl}
+              alt="プロファイル画像"
+            />
+          )}
+          <label
+            htmlFor="file-upload"
+            className="cursor-pointer absolute right-2 bottom-2 w-3/12"
+          >
+            <Image src="/icons/add.png" width={60} height={60} alt="Upload" />
+          </label>
+        </div>
+        <input
+          id="file-upload"
+          type="file"
+          accept="image/*"
+          onChange={uploadProfileImage}
+          className="hidden"
+        />
       </div>
       {user && (
         <div>
@@ -219,22 +234,17 @@ const MyPage = () => {
                   height={60}
                   alt="Icon representing the accumulated height of books"
                 />
+
                 <p className="mt-4">積み上げの高さ: {totalHeight} cm</p>
               </div>
             </div>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={uploadProfileImage}
-              className="file:shadow file:border-none file:py-2 file:px-4 file:rounded-full file:bg-blue-500 file:text-white file:cursor-pointer"
-            />
           </div>
           <div>
             <h2 className="text-2xl font-bold text-gray-800 mt-10">
               登録書籍一覧
             </h2>
             {books.length > 0 ? (
-              <ul className="space-y-4 mt-8">
+              <ul className="space-y-4 mt-">
                 {books.map((book) => (
                   <li key={book.id} className="bg-white p-4 shadow rounded-lg">
                     <div className="book-item flex">

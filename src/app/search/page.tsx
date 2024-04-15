@@ -52,7 +52,6 @@ const BookSearch: NextPage = () => {
               new Date(a.publishedDate).getTime(),
           ),
       );
-      console.log(items);
     } else if (newSortOrder === "oldest") {
       setItems(
         items
@@ -63,7 +62,6 @@ const BookSearch: NextPage = () => {
               new Date(b.publishedDate).getTime(),
           ),
       );
-      console.log(items);
     }
   };
 
@@ -99,28 +97,32 @@ const BookSearch: NextPage = () => {
   return (
     <div className="py-8 m-auto w-11/12">
       <div className="flex justify-center">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="px-4 py-2 border w-6/12 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button shadow-sm"
-          placeholder="キーワードを入力"
-        />
-        <button
-          onClick={onClickSearch}
-          className="px-4 py-2 bg-navy text-white font-bold rounded-full hover:bg-hover_button ml-2"
-        >
-          検索
-        </button>
-        <select
-          onChange={handleSortChange}
-          value={sortOrder}
-          className="px-2 py-2 ml-8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button shadow-sm"
-        >
-          <option value="">並び替え</option>
-          <option value="newest">出版日が新しい順</option>
-          <option value="oldest">出版日が古い順</option>
-        </select>
+        <div className="flex flex-col md:flex-row">
+          <div>
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="px-4 py-2 border w-8/12 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button shadow-sm"
+              placeholder="キーワードを入力"
+            />
+            <button
+              onClick={onClickSearch}
+              className="px-4 py-2 bg-navy text-white font-bold rounded-full hover:bg-hover_button ml-2"
+            >
+              検索
+            </button>
+          </div>
+          <select
+            onChange={handleSortChange}
+            value={sortOrder}
+            className="px-2 py-2 md:ml-8 md:mt-0 ml-0 mt-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button shadow-sm"
+          >
+            <option value="">並び替え</option>
+            <option value="newest">出版日が新しい順</option>
+            <option value="oldest">出版日が古い順</option>
+          </select>
+        </div>
       </div>
       {error && <div style={{ color: "red" }}>{error}</div>}
       {items.length === 0 && !error && hasSearched && (
