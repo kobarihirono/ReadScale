@@ -1,10 +1,4 @@
 {
-  "/not-found": "app/not-found.js",
-  "/timeline/page": "app/timeline/page.js",
-  "/search/page": "app/search/page.js",
-  "/terms/page": "app/terms/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/signin/page": "app/signin/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/mypage/[id]/page": "app/mypage/[id]/page.js"
 }
