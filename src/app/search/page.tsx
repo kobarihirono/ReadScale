@@ -1,7 +1,7 @@
 // search/page.tsx
 "use client";
 
-import React, { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useState, ChangeEvent } from "react";
 import type { NextPage } from "next";
 import BookItem from "../../components/BookItem/BookItem";
 import AddBookModal from "../../components/BookModal/AddBookModal";
@@ -13,9 +13,9 @@ const BookSearch: NextPage = () => {
   const [items, setItems] = useState<Book[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
-  // 検索時にデータの受け取りまでの時間が空くと、情報があっても一瞬検索結果が見つからないと表示される
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [sortOrder, setSortOrder] = useState<string>("");
 
   const onClickSearch = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -39,10 +39,37 @@ const BookSearch: NextPage = () => {
     }
   };
 
+  const handleSortChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const newSortOrder = e.target.value;
+    setSortOrder(newSortOrder);
+    if (newSortOrder === "newest") {
+      setItems(
+        items
+          .slice()
+          .sort(
+            (a, b) =>
+              new Date(b.publishedDate).getTime() -
+              new Date(a.publishedDate).getTime(),
+          ),
+      );
+      console.log(items);
+    } else if (newSortOrder === "oldest") {
+      setItems(
+        items
+          .slice()
+          .sort(
+            (a, b) =>
+              new Date(a.publishedDate).getTime() -
+              new Date(b.publishedDate).getTime(),
+          ),
+      );
+      console.log(items);
+    }
+  };
+
   const closeModal = () => setSelectedBook(null);
 
-  // ローディング中はローディングアイコンを表示
-  if (loading)
+  if (loading) {
     return (
       <div
         role="status"
@@ -67,6 +94,7 @@ const BookSearch: NextPage = () => {
         <span className="sr-only">Loading...</span>
       </div>
     );
+  }
 
   return (
     <div className="py-8 m-auto w-11/12">
@@ -84,6 +112,15 @@ const BookSearch: NextPage = () => {
         >
           検索
         </button>
+        <select
+          onChange={handleSortChange}
+          value={sortOrder}
+          className="px-2 py-2 ml-8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button shadow-sm"
+        >
+          <option value="">並び替え</option>
+          <option value="newest">出版日が新しい順</option>
+          <option value="oldest">出版日が古い順</option>
+        </select>
       </div>
       {error && <div style={{ color: "red" }}>{error}</div>}
       {items.length === 0 && !error && hasSearched && (

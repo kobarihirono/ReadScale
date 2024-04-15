@@ -21,10 +21,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/mypage/[id]/page.js"
     ],
-    "/not-found": [
+    "/timeline/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/not-found.js"
+      "static/chunks/app/timeline/page.js"
+    ],
+    "/signin/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/signin/page.js"
+    ],
+    "/terms/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/terms/page.js"
     ]
   }
 }

@@ -234,7 +234,7 @@ const MyPage = () => {
               登録書籍一覧
             </h2>
             {books.length > 0 ? (
-              <ul className="space-y-4">
+              <ul className="space-y-4 mt-8">
                 {books.map((book) => (
                   <li key={book.id} className="bg-white p-4 shadow rounded-lg">
                     <div className="book-item flex">
