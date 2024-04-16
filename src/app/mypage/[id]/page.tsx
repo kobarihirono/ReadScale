@@ -17,6 +17,8 @@ import { auth, db } from "@/lib/firebase/config";
 import { Book } from "../../types/index";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import EditBookModal from "@/components/BookModal/EditModal";
+import DeleteModal from "@/components/BookModal/DeleteModal";
+import { set } from "react-hook-form";
 
 const MyPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -25,9 +27,24 @@ const MyPage = () => {
 
   const [totalHeight, setTotalHeight] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+  const [bookToDelete, setBookToDelete] = useState<string | null>(null);
   const [editingBook, setEditingBook] = useState<Book | null>(null);
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
   const router = useRouter();
+
+  const handleDeleteClick = (bookId: string): void => {
+    setDeleteModalOpen(true);
+    setBookToDelete(bookId);
+  }
+
+  const confirmDelete = (): void => {
+    if (bookToDelete) {
+      deleteBook(bookToDelete);
+      setDeleteModalOpen(false);
+      setBookToDelete(null);
+    }
+  };
 
   const deleteBook = async (bookId: string): Promise<void> => {
     const bookDocRef = doc(db, "books", bookId);
@@ -224,7 +241,7 @@ const MyPage = () => {
       {user && (
         <div>
           <div className="text-center font-bold text-gray-700">
-            <p className="mt-6">{user.displayName}</p>
+            <p className="mt-6 text-3xl">{user.displayName}</p>
             <p className="mt-2">{user.email}</p>
             <div className="flex justify-center items-center my-10">
               <div className="flex justify-center items-center gap-4 border-2 w-2/3 p-4 rounded-xl">
@@ -265,11 +282,16 @@ const MyPage = () => {
                         </div>
                         <div className="flex justify-end">
                           <button
-                            onClick={() => deleteBook(book.id)}
+                            onClick={() => handleDeleteClick(book.id)}
                             className="px-4 py-2 bg-gray-400 text-white font-bold rounded-full hover:bg-hover_button"
                           >
                             削除
                           </button>
+                          <DeleteModal
+                          isOpen={deleteModalOpen}
+                          onClose={() => setDeleteModalOpen(false)}
+                          onDelete={confirmDelete}
+                           />
                           <button
                             onClick={() => handleEdit(book)}
                             className="px-4 py-2 bg-deepGreen text-white font-bold rounded-full hover:bg-hover_button ml-2"
