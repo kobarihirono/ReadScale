@@ -1,5 +1,4 @@
 // types/index.ts
-
 export interface Book {
   // APIから取得するデータ
   id: string;

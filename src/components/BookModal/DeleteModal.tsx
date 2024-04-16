@@ -16,9 +16,9 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-center">
+    <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center text-center">
       <div className="bg-white p-8 rounded-lg shadow-xl">
-        <p className="text-gray-800">選択した書籍を削除します。</p>
+        <p>選択した書籍を削除します。</p>
         <p className="mt-4 text-sm font-bold text-red-700">
           ※削除した書籍のページ数は累計から減算されますがよろしいですか？
         </p>

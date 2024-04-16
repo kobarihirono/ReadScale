@@ -73,10 +73,12 @@ const MyPage = () => {
     setIsModalOpen(true);
   };
 
-  const handleBookUpdate = (updatedBook: Book): void => {
+  const handleBookUpdate = (updatedBookPartial: Partial<Book>): void => {
     setBooks((prevBooks) =>
       prevBooks.map((book) =>
-        book.id === updatedBook.id ? { ...book, date: updatedBook.date } : book,
+        book.id === updatedBookPartial.id
+          ? { ...book, ...updatedBookPartial }
+          : book,
       ),
     );
   };
@@ -134,8 +136,7 @@ const MyPage = () => {
 
   /**
    * アイコン画像のアップロード処理
-   * @param e イベント
-   * @returns Promise<void>
+   * @param
    */
 
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
@@ -211,7 +212,7 @@ const MyPage = () => {
 
   // ローディング処理
   const [loading, setLoading] = useState<boolean>(true);
-  
+
   if (loading) {
     return <Loading />;
   }
@@ -268,7 +269,7 @@ const MyPage = () => {
                         <div className="flex justify-end">
                           <button
                             onClick={() => handleDeleteClick(book.id)}
-                            className="px-4 py-2 bg-gray-400 text-white font-bold rounded-full hover:bg-hover_button"
+                            className="px-4 py-2 bg-gray-500 text-white font-bold rounded-full hover:bg-gray-400"
                           >
                             削除
                           </button>
@@ -279,7 +280,7 @@ const MyPage = () => {
                           />
                           <button
                             onClick={() => handleEdit(book)}
-                            className="px-4 py-2 bg-deepGreen text-white font-bold rounded-full hover:bg-hover_button ml-2"
+                            className="px-4 py-2 bg-teal-600 text-white font-bold rounded-full hover:bg-teal-500 ml-2"
                           >
                             編集
                           </button>
