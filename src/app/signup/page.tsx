@@ -79,7 +79,13 @@ export default function SignUpScreen() {
   const confirmClick = () => setConfirm(!confirm);
 
   return (
-    <Flex height="100vh" justifyContent="center" alignItems="center">
+    <Flex
+      height="100vh"
+      justifyContent="center"
+      alignItems="center"
+      marginTop="8"
+      marginBottom="8"
+    >
       <VStack spacing="5">
         <Heading>新規登録</Heading>
         <form onSubmit={onSubmit}>

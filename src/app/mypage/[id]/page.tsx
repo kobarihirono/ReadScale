@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { User, onAuthStateChanged } from "firebase/auth";
 import {
   collection,
@@ -107,6 +108,37 @@ const MyPage = () => {
     }
   };
 
+  function getImageForHeight(height: number): string {
+    const thresholds = [
+      { limit: 7, image: "1.2cm" },
+      { limit: 25, image: "7cm" },
+      { limit: 50, image: "25cm" },
+      { limit: 120, image: "50cm" },
+      { limit: 150, image: "120cm" },
+      { limit: 180, image: "150cm" },
+      { limit: 200, image: "180cm" },
+      { limit: 300, image: "200cm" },
+      { limit: 400, image: "300cm" },
+      { limit: 500, image: "400cm" },
+      { limit: 800, image: "500cm" },
+      { limit: 1000, image: "800cm" },
+      { limit: 1500, image: "1000cm" },
+      { limit: 2000, image: "1500cm" },
+      { limit: 3000, image: "2000cm" },
+      { limit: 4000, image: "3000cm" },
+      { limit: 5700, image: "4000cm" },
+      { limit: 9300, image: "5700cm" },
+      { limit: 32400, image: "9300cm" },
+      { limit: 37760, image: "32400cm" },
+      { limit: 63400, image: "37760cm" },
+    ];
+
+    const defaultImage = "63400cm";
+
+    const found = thresholds.find((threshold) => height < threshold.limit);
+    return `/medal/${found ? found.image : defaultImage}.png`;
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser && currentUser.uid) {
@@ -165,38 +197,54 @@ const MyPage = () => {
 
   return (
     <div className="p-6">
-      <div className="flex justify-center">
-        {profileImageUrl && (
-          <img
-            className="rounded-full w-1/3 shadow-lg border-2 border-gray-300"
-            src={profileImageUrl}
-            alt="プロファイル画像"
-          />
-        )}
+      <div className="flex justify-center items-center relative">
+        <div className="relative w-1/3">
+          {profileImageUrl && (
+            <img
+              className="rounded-full w-full shadow-lg border-2 border-gray-300"
+              src={profileImageUrl}
+              alt="プロファイル画像"
+            />
+          )}
+          <label
+            htmlFor="file-upload"
+            className="cursor-pointer absolute right-2 bottom-2 w-3/12"
+          >
+            <Image src="/icons/add.png" width={60} height={60} alt="Upload" />
+          </label>
+        </div>
+        <input
+          id="file-upload"
+          type="file"
+          accept="image/*"
+          onChange={uploadProfileImage}
+          className="hidden"
+        />
       </div>
       {user && (
         <div>
           <div className="text-center font-bold text-gray-700">
             <p className="mt-6">{user.displayName}</p>
             <p className="mt-2">{user.email}</p>
-            <div className="flex justify-center">
-              <p className="mt-4 border-2 w-2/3 p-6 rounded-xl">
-                積み上げの高さ: {totalHeight} cm
-              </p>
+            <div className="flex justify-center items-center my-10">
+              <div className="flex justify-center items-center gap-4 border-2 w-2/3 p-4 rounded-xl">
+                <Image
+                  src={getImageForHeight(totalHeight)}
+                  width={60}
+                  height={60}
+                  alt="Icon representing the accumulated height of books"
+                />
+
+                <p className="mt-4">積み上げの高さ: {totalHeight} cm</p>
+              </div>
             </div>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={uploadProfileImage}
-              className="file:shadow file:border-none file:py-2 file:px-4 file:rounded-full file:bg-blue-500 file:text-white file:cursor-pointer"
-            />
           </div>
           <div>
             <h2 className="text-2xl font-bold text-gray-800 mt-10">
               登録書籍一覧
             </h2>
             {books.length > 0 ? (
-              <ul className="space-y-4">
+              <ul className="space-y-4 mt-">
                 {books.map((book) => (
                   <li key={book.id} className="bg-white p-4 shadow rounded-lg">
                     <div className="book-item flex">
