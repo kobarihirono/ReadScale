@@ -12,11 +12,11 @@ const UserIcon: React.FC<UserIconProps> = ({
   onImageUpload,
 }) => {
   return (
-    <div className="flex justify-center items-center relative">
-      <div className="relative w-1/3">
+    <div className="flex justify-center items-center relative bg-navy pt-6">
+      <div className="relative w-1/3 aspect-square">
         {profileImageUrl && (
           <img
-            className="rounded-full w-full shadow-lg border-2 border-gray-300"
+            className="rounded-full w-full h-full object-cover shadow-lg border-2 border-gray-300"
             src={profileImageUrl}
             alt="Profile Image"
           />

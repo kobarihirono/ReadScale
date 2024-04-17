@@ -43,7 +43,7 @@ const Header = () => {
     );
 
   return (
-    <header className="py-5 px-10 bg-navy border-b flex justify-between items-center md:flex-row-reverse">
+    <header className="py-5 px-10 bg-navy flex justify-between items-center md:flex-row-reverse">
       {/* ハンバーガーナビゲーション */}
       <button className="z-50 space-y-1.5 md:hidden" onClick={handleMenuOpen}>
         <span

@@ -100,7 +100,6 @@ const MyPage = () => {
   };
 
   function getImageForHeight(height: number): string {
-
     const defaultImage = "63400cm";
 
     const found = thresholds.find((threshold) => height < threshold.limit);
@@ -108,7 +107,6 @@ const MyPage = () => {
   }
 
   const calculatePagesToNextRank = (currentHeight: number): number => {
-
     const nextThreshold = thresholds.find(
       (threshold) => currentHeight < threshold.limit,
     );
@@ -211,7 +209,7 @@ const MyPage = () => {
   }
 
   return (
-    <div className="p-6">
+    <div>
       <UserIcon
         profileImageUrl={profileImageUrl}
         onImageUpload={uploadProfileImage}
@@ -219,19 +217,19 @@ const MyPage = () => {
 
       {user && (
         <div>
-          <div className="text-center font-bold text-gray-700">
-            <p className="mt-6 text-3xl">{user.displayName}</p>
-            <p className="mt-2">{user.email}</p>
-            <div className="flex justify-center items-center my-10">
-              <div className="flex justify-center items-center gap-4 border-2 w-2/3 p-4 rounded-xl">
+          <div className="text-center font-bold text-gray-700 bg-navy rounded-b-3xl">
+            <p className="pt-2 text-white text-3xl">{user.displayName}</p>
+            <p className="mt-2 text-white">{user.email}</p>
+            <div className="flex justify-center items-center my-2">
+              <div className="flex justify-center items-center relative top-1 bg-white gap-4 border w-2/3 p-4 rounded-xl">
                 <Image
                   src={getImageForHeight(totalHeight)}
                   width={60}
                   height={60}
-                  alt="Icon representing the accumulated height of books"
+                  alt="ユーザーアイコンが表示されます"
                 />
-                <div>
-                  <p className="">積み上げの高さ: {totalHeight} cm</p>
+                <div className="ml-4">
+                  <p className="">{totalHeight} cm</p>
                   <p className="text-sm mt-1 text-slate-500">
                     次のランクまで約{pagesToNextRank}ページ
                   </p>
@@ -239,50 +237,56 @@ const MyPage = () => {
               </div>
             </div>
           </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800 mt-10">
+
+          <div className="p-6 mb-10 mt-20">
+            <h2 className="text-2xl font-bold text-gray-700">
               登録書籍一覧
             </h2>
             {books.length > 0 ? (
-              <ul className="space-y-4 mt-">
+              <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
                 {books.map((book) => (
-                  <li key={book.id} className="bg-white p-4 shadow rounded-lg">
-                    <div className="book-item flex">
+                  <li
+                    key={book.id}
+                    className="bg-white p-4 shadow rounded-lg flex flex-col h-full"
+                  >
+                    <div className="flex flex-1">
                       <img
                         src={book.img_url}
                         alt={book.name}
-                        className="rounded"
+                        className="rounded w-50 h-50 mr-4 object-cover"
                       />
-                      <div className="flex justify-between flex-col">
+                      <div className="flex flex-col justify-between">
                         <div>
-                          <div className="flex flex-col ml-6">
-                            <p className="text-gray-700">書籍名: {book.name}</p>
-                            <p className="text-gray-700">読了日: {book.date}</p>
-                            <p className="text-gray-700 mb-4">
-                              ページ数: {book.pages}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex justify-end">
-                          <button
-                            onClick={() => handleDeleteClick(book.id)}
-                            className="px-4 py-2 bg-gray-500 text-white font-bold rounded-full hover:bg-gray-400"
-                          >
-                            削除
-                          </button>
-                          <DeleteModal
-                            isOpen={deleteModalOpen}
-                            onClose={() => setDeleteModalOpen(false)}
-                            onDelete={confirmDelete}
-                          />
-                          <button
-                            onClick={() => handleEdit(book)}
-                            className="px-4 py-2 bg-teal-600 text-white font-bold rounded-full hover:bg-teal-500 ml-2"
-                          >
-                            編集
-                          </button>
+                          <p className="text-gray-700 font-bold text-base md:text-lg">
+                            書籍名: {book.name}
+                          </p>
+                          <p className="text-gray-700 text-sm md:text-base mt-1">
+                            読了日: {book.date}
+                          </p>
+                          <p className="text-gray-700 text-sm md:text-base mb-4 mt-1">
+                            ページ数: {book.pages}
+                          </p>
                         </div>
                       </div>
+                    </div>
+                    <div className="mt-2 flex justify-end">
+                      <button
+                        onClick={() => handleDeleteClick(book.id)}
+                        className="px-6 py-2 bg-gray-500 text-white font-bold rounded-full hover:bg-gray-400"
+                      >
+                        削除
+                      </button>
+                      <DeleteModal
+                        isOpen={deleteModalOpen}
+                        onClose={() => setDeleteModalOpen(false)}
+                        onDelete={confirmDelete}
+                      />
+                      <button
+                        onClick={() => handleEdit(book)}
+                        className="px-6 py-2 bg-teal-600 text-white font-bold rounded-full hover:bg-teal-500 ml-2"
+                      >
+                        編集
+                      </button>
                     </div>
                   </li>
                 ))}
