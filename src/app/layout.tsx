@@ -1,5 +1,6 @@
 import DesignProvider from "../common/providers/design_provider";
 import { Inter } from "next/font/google";
+import Head from "next/head";
 import "./globals.css";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -20,6 +21,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
+      <Head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="description" content={metadata.description} />
+        <link rel="icon" href="/icon.ico" />
+      </Head>
       <body>
         <Header />
         <DesignProvider>{children}</DesignProvider>
