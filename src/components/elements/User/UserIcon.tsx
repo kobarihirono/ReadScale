@@ -25,7 +25,7 @@ const UserIcon: React.FC<UserIconProps> = ({
           htmlFor="file-upload"
           className="cursor-pointer absolute right-2 bottom-2 w-3/12"
         >
-          <Image src="/icons/add.png" width={60} height={60} alt="Upload" />
+          <Image src="/icons/add.png" width={45} height={45} alt="Upload" />
         </label>
         <input
           id="file-upload"

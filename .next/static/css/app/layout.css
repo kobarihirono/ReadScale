@@ -843,6 +843,9 @@ video {
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
+.flex-row {
+  flex-direction: row;
+}
 .flex-col {
   flex-direction: column;
 }
@@ -1704,8 +1707,20 @@ th {
     margin: 0px;
   }
 
+  .lg\:mr-24 {
+    margin-right: 6rem;
+  }
+
+  .lg\:mr-36 {
+    margin-right: 9rem;
+  }
+
   .lg\:flex {
     display: flex;
+  }
+
+  .lg\:w-6\/12 {
+    width: 50%;
   }
 
   .lg\:flex-col {
