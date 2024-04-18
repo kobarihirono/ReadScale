@@ -17,10 +17,10 @@ import { auth, db } from "@/lib/firebase/config";
 import { Book } from "../../types/index";
 import { thresholds } from "@/const/index";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import EditBookModal from "@/components/BookModal/EditModal";
-import DeleteModal from "@/components/BookModal/DeleteModal";
-import Loading from "@/components/Loading/Loading";
-import UserIcon from "@/components/User/UserIcon";
+import EditBookModal from "@/components/elements/BookModal/EditModal";
+import DeleteModal from "@/components/elements/BookModal/DeleteModal";
+import Loading from "@/components/elements/Loading/Loading";
+import UserIcon from "@/components/elements/User/UserIcon";
 
 const MyPage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -218,10 +218,10 @@ const MyPage = () => {
       {user && (
         <div>
           <div className="text-center font-bold text-gray-700 bg-navy rounded-b-3xl">
-            <p className="pt-2 text-white text-3xl">{user.displayName}</p>
+            <p className="pt-6 text-white text-3xl">{user.displayName}</p>
             <p className="mt-2 text-white">{user.email}</p>
-            <div className="flex justify-center items-center my-2">
-              <div className="flex justify-center items-center relative top-1 bg-white gap-4 border w-2/3 p-4 rounded-xl">
+            <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center relative top-10 bg-white gap-4 border w-7/12 p-4 rounded-xl">
                 <Image
                   src={getImageForHeight(totalHeight)}
                   width={60}
@@ -229,9 +229,9 @@ const MyPage = () => {
                   alt="ユーザーアイコンが表示されます"
                 />
                 <div className="ml-4">
-                  <p className="">{totalHeight} cm</p>
+                  <p>{totalHeight} cm</p>
                   <p className="text-sm mt-1 text-slate-500">
-                    次のランクまで約{pagesToNextRank}ページ
+                    次のランクまで{pagesToNextRank}ページ
                   </p>
                 </div>
               </div>
@@ -239,9 +239,7 @@ const MyPage = () => {
           </div>
 
           <div className="p-6 mb-10 mt-20">
-            <h2 className="text-2xl font-bold text-gray-700">
-              登録書籍一覧
-            </h2>
+            <h2 className="text-2xl font-bold text-gray-700">登録書籍一覧</h2>
             {books.length > 0 ? (
               <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
                 {books.map((book) => (
