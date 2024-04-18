@@ -7,11 +7,11 @@ const Footer = () => {
       <div className="flex justify-between pt-4">
         <h1 className="text-2xl text-mainFont font-extrabold">Read Scale</h1>
         <nav>
-          <Link className="block" href="/terms">
-            利用規約
+          <Link href="/terms">
+            <a className="block">利用規約</a>
           </Link>
-          <Link className="block" href="/contact">
-            お問い合わせ
+          <Link href="/contact">
+            <a className="block">お問い合わせ</a>
           </Link>
         </nav>
       </div>

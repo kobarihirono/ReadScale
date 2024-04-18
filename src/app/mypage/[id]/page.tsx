@@ -15,11 +15,12 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase/config";
 import { Book } from "../../types/index";
+import { thresholds } from "@/const/index";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import EditBookModal from "@/components/BookModal/EditModal";
-import DeleteModal from "@/components/BookModal/DeleteModal";
-import Loading from "@/components/Loading/Loading";
-import UserIcon from "@/components/User/UserIcon";
+import EditBookModal from "@/components/elements/BookModal/EditModal";
+import DeleteModal from "@/components/elements/BookModal/DeleteModal";
+import Loading from "@/components/elements/Loading/Loading";
+import UserIcon from "@/components/elements/User/UserIcon";
 
 const MyPage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -99,35 +100,25 @@ const MyPage = () => {
   };
 
   function getImageForHeight(height: number): string {
-    const thresholds = [
-      { limit: 7, image: "1.2cm" },
-      { limit: 25, image: "7cm" },
-      { limit: 50, image: "25cm" },
-      { limit: 120, image: "50cm" },
-      { limit: 150, image: "120cm" },
-      { limit: 180, image: "150cm" },
-      { limit: 200, image: "180cm" },
-      { limit: 300, image: "200cm" },
-      { limit: 400, image: "300cm" },
-      { limit: 500, image: "400cm" },
-      { limit: 800, image: "500cm" },
-      { limit: 1000, image: "800cm" },
-      { limit: 1500, image: "1000cm" },
-      { limit: 2000, image: "1500cm" },
-      { limit: 3000, image: "2000cm" },
-      { limit: 4000, image: "3000cm" },
-      { limit: 5700, image: "4000cm" },
-      { limit: 9300, image: "5700cm" },
-      { limit: 32400, image: "9300cm" },
-      { limit: 37760, image: "32400cm" },
-      { limit: 63400, image: "37760cm" },
-    ];
-
     const defaultImage = "63400cm";
 
     const found = thresholds.find((threshold) => height < threshold.limit);
     return `/medal/${found ? found.image : defaultImage}.png`;
   }
+
+  const calculatePagesToNextRank = (currentHeight: number): number => {
+    const nextThreshold = thresholds.find(
+      (threshold) => currentHeight < threshold.limit,
+    );
+    if (!nextThreshold) return 0;
+
+    const heightPerBookPage = 0.2;
+    const nextPageThreshold =
+      (nextThreshold.limit - currentHeight) / heightPerBookPage;
+    return Math.ceil(nextPageThreshold);
+  };
+
+  const pagesToNextRank = calculatePagesToNextRank(totalHeight);
 
   const handleCloseModal = (): void => {
     setIsModalOpen(false);
@@ -218,7 +209,7 @@ const MyPage = () => {
   }
 
   return (
-    <div className="p-6">
+    <div>
       <UserIcon
         profileImageUrl={profileImageUrl}
         onImageUpload={uploadProfileImage}
@@ -226,66 +217,74 @@ const MyPage = () => {
 
       {user && (
         <div>
-          <div className="text-center font-bold text-gray-700">
-            <p className="mt-6 text-3xl">{user.displayName}</p>
-            <p className="mt-2">{user.email}</p>
-            <div className="flex justify-center items-center my-10">
-              <div className="flex justify-center items-center gap-4 border-2 w-2/3 p-4 rounded-xl">
+          <div className="text-center font-bold text-gray-700 bg-navy rounded-b-3xl">
+            <p className="pt-6 text-white text-3xl">{user.displayName}</p>
+            <p className="mt-2 text-white">{user.email}</p>
+            <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center relative top-10 bg-white gap-4 border w-7/12 p-4 rounded-xl">
                 <Image
                   src={getImageForHeight(totalHeight)}
                   width={60}
                   height={60}
-                  alt="Icon representing the accumulated height of books"
+                  alt="ユーザーアイコンが表示されます"
                 />
-
-                <p className="mt-4">積み上げの高さ: {totalHeight} cm</p>
+                <div className="ml-4">
+                  <p>{totalHeight} cm</p>
+                  <p className="text-sm mt-1 text-slate-500">
+                    次のランクまで{pagesToNextRank}ページ
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800 mt-10">
-              登録書籍一覧
-            </h2>
+
+          <div className="p-6 mb-10 mt-20">
+            <h2 className="text-2xl font-bold text-gray-700">登録書籍一覧</h2>
             {books.length > 0 ? (
-              <ul className="space-y-4 mt-">
+              <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
                 {books.map((book) => (
-                  <li key={book.id} className="bg-white p-4 shadow rounded-lg">
-                    <div className="book-item flex">
+                  <li
+                    key={book.id}
+                    className="bg-white p-4 shadow rounded-lg flex flex-col h-full"
+                  >
+                    <div className="flex flex-1">
                       <img
                         src={book.img_url}
                         alt={book.name}
-                        className="rounded"
+                        className="rounded w-50 h-50 mr-4 object-cover"
                       />
-                      <div className="flex justify-between flex-col">
+                      <div className="flex flex-col justify-between">
                         <div>
-                          <div className="flex flex-col ml-6">
-                            <p className="text-gray-700">書籍名: {book.name}</p>
-                            <p className="text-gray-700">読了日: {book.date}</p>
-                            <p className="text-gray-700 mb-4">
-                              ページ数: {book.pages}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex justify-end">
-                          <button
-                            onClick={() => handleDeleteClick(book.id)}
-                            className="px-4 py-2 bg-gray-500 text-white font-bold rounded-full hover:bg-gray-400"
-                          >
-                            削除
-                          </button>
-                          <DeleteModal
-                            isOpen={deleteModalOpen}
-                            onClose={() => setDeleteModalOpen(false)}
-                            onDelete={confirmDelete}
-                          />
-                          <button
-                            onClick={() => handleEdit(book)}
-                            className="px-4 py-2 bg-teal-600 text-white font-bold rounded-full hover:bg-teal-500 ml-2"
-                          >
-                            編集
-                          </button>
+                          <p className="text-gray-700 font-bold text-base md:text-lg">
+                            書籍名: {book.name}
+                          </p>
+                          <p className="text-gray-700 text-sm md:text-base mt-1">
+                            読了日: {book.date}
+                          </p>
+                          <p className="text-gray-700 text-sm md:text-base mb-4 mt-1">
+                            ページ数: {book.pages}
+                          </p>
                         </div>
                       </div>
+                    </div>
+                    <div className="mt-2 flex justify-end">
+                      <button
+                        onClick={() => handleDeleteClick(book.id)}
+                        className="px-6 py-2 bg-gray-500 text-white font-bold rounded-full hover:bg-gray-400"
+                      >
+                        削除
+                      </button>
+                      <DeleteModal
+                        isOpen={deleteModalOpen}
+                        onClose={() => setDeleteModalOpen(false)}
+                        onDelete={confirmDelete}
+                      />
+                      <button
+                        onClick={() => handleEdit(book)}
+                        className="px-6 py-2 bg-teal-600 text-white font-bold rounded-full hover:bg-teal-500 ml-2"
+                      >
+                        編集
+                      </button>
                     </div>
                   </li>
                 ))}

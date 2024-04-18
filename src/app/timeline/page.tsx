@@ -6,7 +6,7 @@ import { collection, getDocs, query, doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase/config";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Book, User } from "../types/index";
-import Loading from "@/components/Loading/Loading";
+import Loading from "@/components/elements/Loading/Loading";
 
 const Timeline = () => {
   const [books, setBooks] = useState<Book[]>([]);

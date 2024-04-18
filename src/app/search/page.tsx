@@ -3,11 +3,11 @@
 
 import React, { SyntheticEvent, useState, ChangeEvent } from "react";
 import type { NextPage } from "next";
-import BookItem from "../../components/BookItem/BookItem";
-import AddBookModal from "../../components/BookModal/AddModal";
+import BookItem from "../../components/elements/BookItem/BookItem";
+import AddBookModal from "../../components/elements/BookModal/AddModal";
 import { Book } from "../types/index";
 import Image from "next/image";
-import Loading from "@/components/Loading/Loading";
+import Loading from "@/components/elements/Loading/Loading";
 
 const BookSearch: NextPage = () => {
   const [query, setQuery] = useState("");
@@ -73,34 +73,42 @@ const BookSearch: NextPage = () => {
   }
 
   return (
-    <div className="py-8 m-auto w-11/12">
+    <div className="w-full">
       <div className="flex justify-center">
-        <div className="flex flex-col md:flex-row">
-          <div>
+        <div className="flex flex-col items-center w-full bg-navy py-6 rounded-b-3xl">
+          <div className="relative w-8/12 lg:w-6/12">
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="px-4 py-2 border w-8/12 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button shadow-sm"
+              className="px-4 py-2 border w-full bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button"
               placeholder="キーワードを入力"
             />
             <button
               onClick={onClickSearch}
-              className="px-4 py-2 bg-navy text-white font-bold rounded-full hover:bg-hover_button ml-2"
+              className="absolute right-2 top-4 transform -translate-y-1/2"
             >
-              検索
+              <Image
+                src="/icons/search.png"
+                alt="検索アイコン"
+                width={30}
+                height={30}
+              />
             </button>
           </div>
-          <select
-            onChange={handleSortChange}
-            value={sortOrder}
-            className="px-2 py-2 md:ml-8 md:mt-0 ml-0 mt-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button shadow-sm"
-          >
-            <option value="">並び替え</option>
-            <option value="newest">出版日が新しい順</option>
-            <option value="oldest">出版日が古い順</option>
-          </select>
         </div>
+      </div>
+
+      <div className="flex justify-end">
+      <select
+        onChange={handleSortChange}
+        value={sortOrder}
+        className="px-2 py-2 mt-4 mr-12 lg:mr-36 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button"
+      >
+        <option value="">並び替え</option>
+        <option value="newest">出版日が新しい順</option>
+        <option value="oldest">出版日が古い順</option>
+      </select>
       </div>
       {error && <div style={{ color: "red" }}>{error}</div>}
       {items.length === 0 && !error && hasSearched && (
@@ -119,9 +127,9 @@ const BookSearch: NextPage = () => {
         </div>
       )}
       {items.length === 0 && !hasSearched && (
-        <div className="mt-6 text-center">
-          <p>キーワードを入力して検索してください。</p>
-          <div className="flex justify-center">
+        <div className="flex flex-col items-center justify-center my-24 text-center">
+          <p className="">キーワードを入力して検索してください。</p>
+          <div className="flex justify-center mt-6">
             <Image
               src="/images/search.png"
               alt="本を開いている人の画像"
