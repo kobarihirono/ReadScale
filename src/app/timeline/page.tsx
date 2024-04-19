@@ -20,16 +20,17 @@ const Timeline = () => {
       try {
         const q = query(collection(db, "books"));
         const querySnapshot = await getDocs(q);
-        const booksData: Book[] = querySnapshot.docs.map((doc) => {
-          const data = doc.data() as Book;
-          return {
-            ...data,
-            id: doc.id,
-            date: formatDate(data.date),
-            createdAt: formatDate(data.createdAt),
-          };
-        })
-        .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+        const booksData: Book[] = querySnapshot.docs
+          .map((doc) => {
+            const data = doc.data() as Book;
+            return {
+              ...data,
+              id: doc.id,
+              date: formatDate(data.date),
+              createdAt: formatDate(data.createdAt),
+            };
+          })
+          .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
         setBooks(booksData);
         await fetchUsers(booksData);
@@ -101,9 +102,7 @@ const Timeline = () => {
                   {users[book.userId]?.displayName}
                 </h2>
                 <p className="text-gray-700 truncate">{book.name}</p>
-                <p className="text-sm text-gray-500">
-                  読了日: {book.date}
-                </p>
+                <p className="text-sm text-gray-500">読了日: {book.date}</p>
                 <p className="text-sm text-gray-500">
                   登録日: {book.createdAt}
                 </p>

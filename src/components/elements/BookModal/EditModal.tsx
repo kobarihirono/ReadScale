@@ -62,7 +62,7 @@ const EditBookModal: React.FC<EditBookModalProps> = ({
       toast({
         title: "更新に失敗しました。",
         status: "error",
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
       });
     }
