@@ -221,7 +221,7 @@ const MyPage = () => {
             <p className="pt-6 text-white text-3xl">{user.displayName}</p>
             <p className="mt-2 text-white">{user.email}</p>
             <div className="flex justify-center items-center">
-              <div className="flex justify-center items-center relative top-10 bg-white gap-4 border w-7/12 p-4 rounded-xl">
+              <div className="flex justify-center items-center relative top-10 bg-white shadow-md gap-4 w-7/12 p-4 rounded-xl">
                 <Image
                   src={getImageForHeight(totalHeight)}
                   width={60}
@@ -238,7 +238,7 @@ const MyPage = () => {
             </div>
           </div>
 
-          <div className="p-6 mb-10 mt-20">
+          <div className="p-6 mb-10 mt-24">
             <h2 className="text-2xl font-bold text-gray-700">登録書籍一覧</h2>
             {books.length > 0 ? (
               <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
@@ -251,7 +251,7 @@ const MyPage = () => {
                       <img
                         src={book.img_url}
                         alt={book.name}
-                        className="rounded w-1/3 flex-shrink-0 object-cover"
+                        className="rounded w-2/7 flex-shrink-0 object-cover"
                       />
                       <div className="flex flex-col justify-between flex-grow ml-4">
                         <div>

@@ -98,7 +98,9 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <button className="block" onClick={handleLogout}>ログアウト</button>
+            <button className="block" onClick={handleLogout}>
+              ログアウト
+            </button>
           </li>
         </ul>
       </nav>
