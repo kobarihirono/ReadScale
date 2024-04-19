@@ -73,7 +73,7 @@ const BookSearch: NextPage = () => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full mb-12">
       <div className="flex justify-center">
         <div className="flex flex-col items-center w-full bg-navy py-6 rounded-b-3xl">
           <div className="relative w-8/12 lg:w-6/12">
