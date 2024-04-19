@@ -251,11 +251,11 @@ const MyPage = () => {
                       <img
                         src={book.img_url}
                         alt={book.name}
-                        className="rounded w-50 h-50 mr-4 object-cover"
+                        className="rounded w-1/3 flex-shrink-0 object-cover"
                       />
-                      <div className="flex flex-col justify-between">
+                      <div className="flex flex-col justify-between flex-grow ml-4">
                         <div>
-                          <p className="text-gray-700 font-bold text-base md:text-lg">
+                          <p className="text-gray-700 font-bold text-base md:text-lg truncate">
                             書籍名: {book.name}
                           </p>
                           <p className="text-gray-700 text-sm md:text-base mt-1">

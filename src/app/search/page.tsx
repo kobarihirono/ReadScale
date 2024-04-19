@@ -100,15 +100,15 @@ const BookSearch: NextPage = () => {
       </div>
 
       <div className="flex justify-end">
-      <select
-        onChange={handleSortChange}
-        value={sortOrder}
-        className="px-2 py-2 mt-4 mr-12 lg:mr-36 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button"
-      >
-        <option value="">並び替え</option>
-        <option value="newest">出版日が新しい順</option>
-        <option value="oldest">出版日が古い順</option>
-      </select>
+        <select
+          onChange={handleSortChange}
+          value={sortOrder}
+          className="px-2 py-2 mt-4 mr-12 lg:mr-36 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-hover_button"
+        >
+          <option value="">並び替え</option>
+          <option value="newest">出版日が新しい順</option>
+          <option value="oldest">出版日が古い順</option>
+        </select>
       </div>
       {error && <div style={{ color: "red" }}>{error}</div>}
       {items.length === 0 && !error && hasSearched && (
