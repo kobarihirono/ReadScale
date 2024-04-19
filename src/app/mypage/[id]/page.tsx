@@ -14,6 +14,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase/config";
+import { useToast } from "@/common/design";
 import { Book } from "../../types/index";
 import { thresholds } from "@/const/index";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -25,6 +26,7 @@ import UserIcon from "@/components/elements/User/UserIcon";
 const MyPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [books, setBooks] = useState<Book[]>([]);
+  const toast = useToast();
   const router = useRouter();
 
   /**
@@ -53,6 +55,12 @@ const MyPage = () => {
     const bookDocRef = doc(db, "books", bookId);
     try {
       await deleteDoc(bookDocRef);
+      toast({
+        title: '書籍が正常に削除されました。',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
       const updatedBooks = books.filter((book) => book.id !== bookId);
       setBooks(updatedBooks);
       updateTotalHeight(updatedBooks);
@@ -93,14 +101,12 @@ const MyPage = () => {
 
   const updateTotalHeight = (books: Book[]): void => {
     const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
-    const heightPerBookPage = 0.2;
-    const totalHeight =
-      Math.floor(((totalPages * heightPerBookPage) / 10) * 100) / 100;
+    const heightPerBookPage = 0.01;
+    const totalHeight = Math.floor(totalPages * heightPerBookPage * 100) / 100;
     setTotalHeight(totalHeight);
   };
-
   function getImageForHeight(height: number): string {
-    const defaultImage = "63400cm";
+    const defaultImage = "1.2cm";
 
     const found = thresholds.find((threshold) => height < threshold.limit);
     return `/medal/${found ? found.image : defaultImage}.png`;
@@ -112,12 +118,11 @@ const MyPage = () => {
     );
     if (!nextThreshold) return 0;
 
-    const heightPerBookPage = 0.2;
+    const heightPerBookPage = 0.01;
     const nextPageThreshold =
       (nextThreshold.limit - currentHeight) / heightPerBookPage;
     return Math.ceil(nextPageThreshold);
   };
-
   const pagesToNextRank = calculatePagesToNextRank(totalHeight);
 
   const handleCloseModal = (): void => {

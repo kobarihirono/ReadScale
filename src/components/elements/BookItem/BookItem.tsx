@@ -2,7 +2,8 @@ import { Book } from "../../../app/types/index";
 
 type AppProps = { book: Book };
 const BookItem = ({ book }: AppProps) => {
-  const displayTitle = book.title.length > 30 ? book.title.substring(0, 30) + "..." : book.title;
+  const displayTitle =
+    book.title.length > 30 ? book.title.substring(0, 30) + "..." : book.title;
 
   return (
     <div className="border border-gray-300 rounded p-4 mt-2 mx-2 cursor-pointer">
