@@ -16,6 +16,7 @@ export interface Book {
   pages: number;
   img_url: string;
   userId: string;
+  createdAt: string;
 }
 
 export interface User {

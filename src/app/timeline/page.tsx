@@ -7,6 +7,7 @@ import { db } from "@/lib/firebase/config";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { Book, User } from "../types/index";
 import Loading from "@/components/elements/Loading/Loading";
+import { formatDate } from "@/utils/index";
 
 const Timeline = () => {
   const [books, setBooks] = useState<Book[]>([]);
@@ -17,15 +18,19 @@ const Timeline = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        // データベースからbooksコレクションのデータを取得
         const q = query(collection(db, "books"));
-        // ドキュメントを非同期で取得
         const querySnapshot = await getDocs(q);
-        // 取得したドキュメント配列をオブジェクトに変換
-        const booksData: Book[] = querySnapshot.docs.map((doc) => ({
-          ...(doc.data() as Book),
-          id: doc.id,
-        }));
+        const booksData: Book[] = querySnapshot.docs.map((doc) => {
+          const data = doc.data() as Book;
+          return {
+            ...data,
+            id: doc.id,
+            date: formatDate(data.date),
+            createdAt: formatDate(data.createdAt),
+          };
+        })
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+
         setBooks(booksData);
         await fetchUsers(booksData);
       } catch (err) {
@@ -81,25 +86,32 @@ const Timeline = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="py-8 m-auto w-11/12">
-      <h1 className="text-center font-bold text-xl">みんなの積み上げ</h1>
-      {books.map((book) => (
-        <div
-          key={book.id}
-          className="book-item flex items-center border-2 m-4 p-4"
-        >
-          <img
-            className="rounded-full w-32 h-32 object-cover mr-4"
-            src={users[book.userId]?.photoURL}
-            alt={users[book.userId]?.displayName || "プロファイル画像"}
-          />
-          <div className="flex flex-col gap-2">
-            <h2 className="font-bold">{users[book.userId]?.displayName}</h2>
-            <p className="font-bold">{book.name}</p>
-            <p>読了日: {book.date}</p>
+    <div className="container mx-auto py-10 px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {books.map((book) => (
+          <div key={book.id} className="rounded-lg shadow-md p-4">
+            <div className="flex items-center space-x-4">
+              <img
+                className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full object-cover"
+                src={users[book.userId]?.photoURL}
+                alt={users[book.userId]?.displayName || "プロファイル画像"}
+              />
+              <div className="flex-1 min-w-0">
+                <h2 className="text-lg md:text-xl text-gray-900 truncate">
+                  {users[book.userId]?.displayName}
+                </h2>
+                <p className="text-gray-700 truncate">{book.name}</p>
+                <p className="text-sm text-gray-500">
+                  読了日: {book.date}
+                </p>
+                <p className="text-sm text-gray-500">
+                  登録日: {book.createdAt}
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
