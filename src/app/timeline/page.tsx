@@ -5,12 +5,12 @@
 import React, { useEffect, useState } from "react";
 import Loading from "@/components/elements/Loading/Loading";
 import { fetchBooks, fetchUsers } from "@/lib/firebase/apis/allBook";
-import { Book, User } from "@/types/index"; // この行を追加
+import { Book, User } from "@/types/index";
 
 export default function TimelinePage() {
-  const [books, setBooks] = useState<Book[] | null>(null); // Book型の配列またはnullを指定
-  const [users, setUsers] = useState<{ [key: string]: User }>({}); // Userオブジェクトのマップとして型指定
-  const [error, setError] = useState<string | null>(null); // エラーの型も明示的に指定
+  const [books, setBooks] = useState<Book[] | null>(null);
+  const [users, setUsers] = useState<{ [key: string]: User }>({});
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,8 +52,7 @@ export default function TimelinePage() {
                 <h2 className="text-lg md:text-xl text-gray-900 truncate">
                   {users[book.userId]?.displayName}
                 </h2>
-                <p className="text-gray-700 truncate">{book.title}</p>{" "}
-                {/* 'name'を 'title'に修正 */}
+                <p className="text-gray-700 truncate">{book.name}</p>{" "}
                 <p className="text-sm text-gray-500">読了日: {book.date}</p>
                 <p className="text-sm text-gray-500">
                   登録日: {book.createdAt}

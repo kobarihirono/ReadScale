@@ -33,7 +33,7 @@ const BookSearch: NextPage = () => {
       setItems(data);
       setQuery("");
     } catch (error) {
-      console.error("An error occurred during the book search:", error);
+      console.error("検索結果の抽出に失敗しました:", error);
       setError("Failed to load books. Please try again.");
     } finally {
       setLoading(false);
