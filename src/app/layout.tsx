@@ -1,12 +1,11 @@
 import DesignProvider from "../common/providers/design_provider";
-import { notoSansJP } from '@/app/fonts';
+import { notoSansJP } from "@/app/fonts";
 import Head from "next/head";
 import "./globals.css";
 import Header from "../components/layouts/Header";
 import Footer from "../components/layouts/Footer";
 import "../../global.css";
 import type { Metadata } from "next";
-
 
 export const metadata: Metadata = {
   title: "Read Scale",
@@ -26,7 +25,9 @@ export default function RootLayout({
         <meta name="description" content={metadata.description} />
         <link rel="icon" href="/icon.ico" />
       </Head>
-      <body className={`${notoSansJP.className} flex flex-col min-h-screen`}>
+      <body
+        className={`${notoSansJP.className} antialiased flex flex-col min-h-screen`}
+      >
         <Header />
         <main className="flex-1">
           <DesignProvider>{children}</DesignProvider>

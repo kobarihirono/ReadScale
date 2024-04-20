@@ -8,7 +8,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase/config";
-import { Book } from "../app/types/index";
+import { Book } from "../types/index";
 
 export function useBooks(user) {
   const [books, setBooks] = useState<Book[]>([]);

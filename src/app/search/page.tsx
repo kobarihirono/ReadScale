@@ -5,7 +5,7 @@ import React, { SyntheticEvent, useState, ChangeEvent } from "react";
 import type { NextPage } from "next";
 import BookItem from "../../components/elements/BookItem/BookItem";
 import AddBookModal from "../../components/elements/BookModal/AddModal";
-import { Book } from "../types/index";
+import { Book } from "../../types/index";
 import Image from "next/image";
 import Loading from "@/components/elements/Loading/Loading";
 

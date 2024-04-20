@@ -1,10 +1,10 @@
 // src/pages/api/books.ts
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Book } from "../../app/types/index";
+import { Book } from "../../types/index";
 
 /**
- * Google Books API で鬼滅関連の書籍を検索する関数
+ * Google Books API で書籍を検索する関数
  * [GET]/api/books
  *
  * @param req リクエスト
@@ -30,7 +30,7 @@ export default async function handler(
 }
 
 /**
- * Google Books API の実行と取得結果（JSON）の整形を行う関数
+ * Google Books API の実行と取得結果の整形を行う
  *
  * @param q 検索クエリ
  * @returns 見つかった書籍のリスト

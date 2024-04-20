@@ -1,90 +1,41 @@
 // src/app/timeline/page.tsx
+
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { collection, getDocs, query, doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase/config";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { Book, User } from "../types/index";
 import Loading from "@/components/elements/Loading/Loading";
-import { formatDate } from "@/utils/index";
+import { fetchBooks, fetchUsers } from "@/lib/firebase/apis/allBook";
+import { Book, User } from "@/types/index"; // この行を追加
 
-const Timeline = () => {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [users, setUsers] = useState<{ [key: string]: User }>({});
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+export default function TimelinePage() {
+  const [books, setBooks] = useState<Book[] | null>(null); // Book型の配列またはnullを指定
+  const [users, setUsers] = useState<{ [key: string]: User }>({}); // Userオブジェクトのマップとして型指定
+  const [error, setError] = useState<string | null>(null); // エラーの型も明示的に指定
 
   useEffect(() => {
-    const fetchBooks = async () => {
+    const fetchData = async () => {
       try {
-        const q = query(collection(db, "books"));
-        const querySnapshot = await getDocs(q);
-        const booksData: Book[] = querySnapshot.docs
-          .map((doc) => {
-            const data = doc.data() as Book;
-            return {
-              ...data,
-              id: doc.id,
-              date: formatDate(data.date),
-              createdAt: formatDate(data.createdAt),
-            };
-          })
-          .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-
-        setBooks(booksData);
-        await fetchUsers(booksData);
+        const fetchedBooks = await fetchBooks();
+        if (fetchedBooks) {
+          setBooks(fetchedBooks);
+          const fetchedUsers = await fetchUsers(fetchedBooks);
+          setUsers(fetchedUsers);
+        }
       } catch (err) {
         setError("データの取得中にエラーが発生しました。");
-      } finally {
-        setLoading(false);
       }
     };
 
-    const fetchUsers = async (booksData: Book[]) => {
-      const usersData: { [key: string]: User } = {};
-      const storage = getStorage();
-
-      for (const book of booksData) {
-        if (!usersData[book.userId]) {
-          const userDocRef = doc(db, "users", book.userId);
-          const userDoc = await getDoc(userDocRef);
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            const photoRef = ref(
-              storage,
-              `profileImages/${book.userId}/avatar.jpg`,
-            );
-            const photoURL = await getDownloadURL(photoRef).catch(
-              () => "/icons/no-icon.png",
-            );
-
-            usersData[book.userId] = {
-              uid: book.userId,
-              displayName: userData.username || "未設定",
-              photoURL: photoURL,
-            };
-          } else {
-            usersData[book.userId] = {
-              uid: book.userId,
-              displayName: "未設定",
-              photoURL: "/icons/no-icon.png",
-            };
-          }
-        }
-      }
-
-      setUsers(usersData);
-    };
-
-    fetchBooks();
+    fetchData();
   }, []);
 
-  if (loading) {
-    return <Loading />;
+  if (error) {
+    return <div>Error: {error}</div>;
   }
 
-  if (error) return <div>Error: {error}</div>;
+  if (!books || !users) {
+    return <Loading />;
+  }
 
   return (
     <div className="container mx-auto py-10 px-4">
@@ -101,7 +52,8 @@ const Timeline = () => {
                 <h2 className="text-lg md:text-xl text-gray-900 truncate">
                   {users[book.userId]?.displayName}
                 </h2>
-                <p className="text-gray-700 truncate">{book.name}</p>
+                <p className="text-gray-700 truncate">{book.title}</p>{" "}
+                {/* 'name'を 'title'に修正 */}
                 <p className="text-sm text-gray-500">読了日: {book.date}</p>
                 <p className="text-sm text-gray-500">
                   登録日: {book.createdAt}
@@ -113,6 +65,4 @@ const Timeline = () => {
       </div>
     </div>
   );
-};
-
-export default Timeline;
+}
