@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import NextLink from "next/link";
 import { sendPasswordReset } from "@/lib/firebase/apis/auth";
 import type { FormData } from "../types/index";
+import { FaKey } from 'react-icons/fa';
 
 import {
   Button,
@@ -87,7 +88,7 @@ const ForgotPasswordPage = () => {
         as="form"
         onSubmit={handleSubmit(handlePasswordReset)}
       >
-        <Image src="/icons/lock.png" alt="鍵マーク" width={40} height={40} />
+       <FaKey size="30px" color="#265073" />
         <Heading>パスワード再設定</Heading>
         <VStack spacing="4" alignItems="left">
           <FormControl isInvalid={Boolean(errors.email)}>
