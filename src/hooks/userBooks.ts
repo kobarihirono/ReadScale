@@ -8,9 +8,9 @@ import {
   doc,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase/config";
-import { Book } from "../types/index";
+import { Book, User } from "../types/index";
 
-export function useBooks(user) {
+export function useBooks(user: User) {
   const [books, setBooks] = useState<Book[]>([]);
 
   useEffect(() => {
