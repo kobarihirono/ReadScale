@@ -1,4 +1,5 @@
 // src/app/my-page/[id]/page.tsx
+
 "use client";
 
 import React, { useState, useEffect, ChangeEvent } from "react";
@@ -20,6 +21,7 @@ import { thresholds, heightPerBookPage } from "@/const/index";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import EditBookModal from "@/components/elements/BookModal/EditModal";
 import DeleteModal from "@/components/elements/BookModal/DeleteModal";
+import ThresholdExceededModal from "@/components/elements/BookModal/ThresholdExceededModal";
 import Loading from "@/components/elements/Loading/Loading";
 import UserIcon from "@/components/elements/User/UserIcon";
 
@@ -98,12 +100,28 @@ const MyPage = () => {
    */
 
   const [totalHeight, setTotalHeight] = useState<number>(0);
+  const [lastThreshold, setLastThreshold] = useState<number>(0);
+  const [currentRankName, setCurrentRankName] = useState<string>("");
+  const [showThresholdModal, setShowThresholdModal] = useState<boolean>(false);
 
   const updateTotalHeight = (books: Book[]): void => {
     const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
-    const totalHeight = Math.floor(totalPages * heightPerBookPage * 100) / 100;
-    setTotalHeight(totalHeight);
+    const newTotalHeight =
+      Math.floor(totalPages * heightPerBookPage * 100) / 100;
+    setTotalHeight(newTotalHeight);
+
+    const latestRank = thresholds
+      .slice()
+      .reverse() // 閾値リストを逆順にして
+      .find((threshold) => newTotalHeight >= threshold.limit); // 最初に条件を満たす要素を取得
+
+    if (latestRank && latestRank.limit !== lastThreshold) {
+      setLastThreshold(latestRank.limit);
+      setCurrentRankName(latestRank.name);
+      setShowThresholdModal(true);
+    }
   };
+
   function getImageForHeight(height: number): string {
     const defaultImage = "1.2cm";
 
@@ -299,6 +317,15 @@ const MyPage = () => {
           </div>
         </div>
       )}
+
+      <ThresholdExceededModal
+        isOpen={showThresholdModal}
+        onClose={() => setShowThresholdModal(false)}
+        height={totalHeight}
+        rankName={currentRankName}
+        thresholdLimit={lastThreshold}
+      />
+
       {isModalOpen && editingBook && (
         <EditBookModal
           bookId={editingBook.id}
