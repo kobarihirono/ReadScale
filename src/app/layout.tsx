@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Read Scale",
-  description: "積み上げた知識の高さを共有しよう",
+  description: "積み上げた知識の高さを確認できる、読書管理アプリです",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width" />
-        <meta name="description" content={metadata.description} />
+        <meta name="description" content={metadata.description || "積み上げた知識の高さを確認できる、読書管理アプリです"} />
         <link rel="icon" href="/icon.ico" />
       </Head>
       <body
