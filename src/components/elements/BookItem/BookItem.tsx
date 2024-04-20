@@ -1,4 +1,4 @@
-import { Book } from "../../../app/types/index";
+import { Book } from "../../../types/index";
 
 type AppProps = { book: Book };
 const BookItem = ({ book }: AppProps) => {

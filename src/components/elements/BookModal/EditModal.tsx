@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase/config";
 import { useToast } from "@/common/design";
-import { Book } from "../../../app/types/index";
+import { Book } from "../../../types/index";
 
 interface EditBookModalProps {
   bookId: string;

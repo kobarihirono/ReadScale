@@ -15,7 +15,7 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase/config";
 import { useToast } from "@/common/design";
-import { Book } from "../../types/index";
+import { Book } from "../../../types/index";
 import { thresholds, heightPerBookPage } from "@/const/index";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import EditBookModal from "@/components/elements/BookModal/EditModal";
@@ -56,8 +56,8 @@ const MyPage = () => {
     try {
       await deleteDoc(bookDocRef);
       toast({
-        title: '書籍が正常に削除されました。',
-        status: 'success',
+        title: "書籍が正常に削除されました。",
+        status: "success",
         duration: 3000,
         isClosable: true,
       });
@@ -121,7 +121,7 @@ const MyPage = () => {
       (nextThreshold.limit - currentHeight) / heightPerBookPage;
     return Math.ceil(nextPageThreshold);
   };
-  
+
   const pagesToNextRank = calculatePagesToNextRank(totalHeight);
 
   const handleCloseModal = (): void => {

@@ -12,7 +12,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db, auth } from "@/lib/firebase/config";
-import { Book } from "../../../app/types/index";
+import { Book } from "../../../types/index";
 
 interface AddBookModalProps {
   book: Book;
