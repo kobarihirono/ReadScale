@@ -1,8 +1,8 @@
 {
-  "/timeline/page": "app/timeline/page.js",
   "/terms/page": "app/terms/page.js",
   "/contact/page": "app/contact/page.js",
   "/signin/page": "app/signin/page.js",
   "/forgot_password/page": "app/forgot_password/page.js",
-  "/signup/page": "app/signup/page.js"
+  "/signup/page": "app/signup/page.js",
+  "/page": "app/page.js"
 }
