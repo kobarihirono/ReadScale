@@ -6,10 +6,17 @@
 
 読んだ本を登録すると書籍の厚みが高さに換算され、今までの読書記録を積み上げていくことができる読書管理アプリです。
 
-## 実際の挙動
+## URL
+以下のURLよりアプリを体験できます。
 
-https://github.com/kobarihirono/ReadScale/assets/131847306/163f4e7a-16cf-4b8b-8332-8c91a3871511
+https://read-scale-9ka5plcwx-kobaris-projects.vercel.app/
 
+メールアドレス：test@test.com
+パスワード：Test1234
+
+### 実際の挙動
+
+https://github.com/kobarihirono/ReadScale/assets/131847306/63394ad3-08ef-4d79-b6f6-9b1475321a72
 
 ## 制作の動機
 
