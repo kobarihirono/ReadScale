@@ -1,6 +1,6 @@
 // src/const/index.ts
 
-// 本の高さの閾値
+// 本の高さの閾値を定義
 export const thresholds = [
   { limit: 7, image: "1.2cm" },
   { limit: 25, image: "7cm" },
@@ -24,3 +24,6 @@ export const thresholds = [
   { limit: 37760, image: "32400cm" },
   { limit: 63400, image: "37760cm" },
 ];
+
+// 1ページあたりの高さを定義
+export const heightPerBookPage = 0.01;

@@ -26,7 +26,7 @@ export default function RootLayout({
         <meta name="description" content={metadata.description} />
         <link rel="icon" href="/icon.ico" />
       </Head>
-      <body className={`${notoSansJP.className} flex flex-col min-h-screen`}>
+      <body className={`${notoSansJP.className} antialiased flex flex-col min-h-screen`}>
         <Header />
         <main className="flex-1">
           <DesignProvider>{children}</DesignProvider>
