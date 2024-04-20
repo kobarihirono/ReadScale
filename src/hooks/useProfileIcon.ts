@@ -1,10 +1,13 @@
+// hooks/useProfileIcon.ts
+
 import { useState } from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { User } from "@/types/index";
 
-export function useProfileImage(user) {
-  const [profileImageUrl, setProfileImageUrl] = useState(null);
+export function useProfileImage(user: User) {
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
 
-  const uploadProfileImage = async (file) => {
+  const uploadProfileImage = async (file: File) => {
     if (!user || !file) return;
 
     const storage = getStorage();
