@@ -9,9 +9,9 @@
 ## URL
 以下のURLよりアプリを体験できます。
 
-https://read-scale-9ka5plcwx-kobaris-projects.vercel.app/
+https://read-scale.vercel.app/
 
-メールアドレス：test@test.com
+メールアドレス：test@test.com  
 パスワード：Test1234
 
 ### 実際の挙動
@@ -43,7 +43,7 @@ https://github.com/kobarihirono/ReadScale/assets/131847306/63394ad3-08ef-4d79-b6
 
   - Google Book APIを使用した書籍検索
   - 検索した書籍の並び替え
-  - 書籍の読了日の登録
+  - 書籍の読了日・ページ数の登録
 
 - **マイページ**
 
@@ -52,6 +52,7 @@ https://github.com/kobarihirono/ReadScale/assets/131847306/63394ad3-08ef-4d79-b6
   - 累計の高さに応じたアイコンの表示
   - 登録済み書籍の読了日の変更
   - 登録済み書籍の削除
+  - 累計の高さが閾値を超えた時にモーダルを表示
 
 - **タイムライン**
   - 他ユーザーの書籍登録情報の表示
@@ -143,9 +144,7 @@ src/
 
 ## テスト
 
-### テスト仕様書
-
 ## デザイン
 
-URLよりfigmaデザインの確認ができます。
+URLよりfigmaデザインの確認ができます。  
 https://www.figma.com/file/I03ssWJsITenc7cu3pzURF/Read-Scale?type=design&node-id=0%3A1&mode=design&t=Y1cT0JqxrgaY8MpP-1

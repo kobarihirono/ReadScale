@@ -2,7 +2,15 @@
 
 import React from "react";
 
-const ThresholdExceededModal = ({
+interface ThresholdExceededModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  height: number;
+  rankName: string;
+  thresholdLimit: number;
+}
+
+const ThresholdExceededModal: React.FC<ThresholdExceededModalProps> = ({
   isOpen,
   onClose,
   height,
