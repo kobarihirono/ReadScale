@@ -22,7 +22,13 @@ export default function RootLayout({
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width" />
-        <meta name="description" content={metadata.description || "積み上げた知識の高さを確認できる、読書管理アプリです"} />
+        <meta
+          name="description"
+          content={
+            metadata.description ||
+            "積み上げた知識の高さを確認できる、読書管理アプリです"
+          }
+        />
         <link rel="icon" href="/icon.ico" />
       </Head>
       <body

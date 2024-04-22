@@ -1,4 +1,5 @@
 // src/app/my-page/[id]/page.tsx
+
 "use client";
 
 import React, { useState, useEffect, ChangeEvent } from "react";
@@ -18,8 +19,10 @@ import { useToast } from "@/common/design";
 import { Book } from "../../../types/index";
 import { thresholds, heightPerBookPage } from "@/const/index";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import useRankManagement from "@/hooks/useRank";
 import EditBookModal from "@/components/elements/BookModal/EditModal";
 import DeleteModal from "@/components/elements/BookModal/DeleteModal";
+import ThresholdExceededModal from "@/components/elements/BookModal/ThresholdExceededModal";
 import Loading from "@/components/elements/Loading/Loading";
 import UserIcon from "@/components/elements/User/UserIcon";
 
@@ -63,7 +66,6 @@ const MyPage = () => {
       });
       const updatedBooks = books.filter((book) => book.id !== bookId);
       setBooks(updatedBooks);
-      updateTotalHeight(updatedBooks);
     } catch (error) {
       console.error("Error deleting book: ", error);
     }
@@ -96,14 +98,16 @@ const MyPage = () => {
    * 書籍の高さを更新する
    * @param books 書籍リスト
    */
+  
+  const userId = user ? user.uid : undefined;
+  const {
+    currentRankName,
+    showThresholdModal,
+    totalHeight,
+    lastThreshold,
+    closeModal,
+  } = useRankManagement(userId, books);
 
-  const [totalHeight, setTotalHeight] = useState<number>(0);
-
-  const updateTotalHeight = (books: Book[]): void => {
-    const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
-    const totalHeight = Math.floor(totalPages * heightPerBookPage * 100) / 100;
-    setTotalHeight(totalHeight);
-  };
   function getImageForHeight(height: number): string {
     const defaultImage = "1.2cm";
 
@@ -192,8 +196,7 @@ const MyPage = () => {
             ...(doc.data() as Book),
             id: doc.id,
           }));
-          setBooks(userBooks);
-          updateTotalHeight(userBooks);
+          setBooks(userBooks); // フックが自動的に totalHeight を更新する
         };
 
         fetchBooks();
@@ -299,6 +302,15 @@ const MyPage = () => {
           </div>
         </div>
       )}
+
+      <ThresholdExceededModal
+        isOpen={showThresholdModal}
+        onClose={closeModal}
+        height={totalHeight}
+        rankName={currentRankName}
+        thresholdLimit={lastThreshold}
+      />
+
       {isModalOpen && editingBook && (
         <EditBookModal
           bookId={editingBook.id}
