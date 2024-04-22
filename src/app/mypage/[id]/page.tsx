@@ -98,13 +98,15 @@ const MyPage = () => {
    * 書籍の高さを更新する
    * @param books 書籍リスト
    */
+  
+  const userId = user ? user.uid : undefined;
   const {
     currentRankName,
     showThresholdModal,
     totalHeight,
     lastThreshold,
     closeModal,
-  } = useRankManagement(user?.uid, books);
+  } = useRankManagement(userId, books);
 
   function getImageForHeight(height: number): string {
     const defaultImage = "1.2cm";
