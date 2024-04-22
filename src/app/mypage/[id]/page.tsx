@@ -19,6 +19,7 @@ import { useToast } from "@/common/design";
 import { Book } from "../../../types/index";
 import { thresholds, heightPerBookPage } from "@/const/index";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import useRankManagement from "@/hooks/useRank";
 import EditBookModal from "@/components/elements/BookModal/EditModal";
 import DeleteModal from "@/components/elements/BookModal/DeleteModal";
 import ThresholdExceededModal from "@/components/elements/BookModal/ThresholdExceededModal";
@@ -65,7 +66,6 @@ const MyPage = () => {
       });
       const updatedBooks = books.filter((book) => book.id !== bookId);
       setBooks(updatedBooks);
-      updateTotalHeight(updatedBooks);
     } catch (error) {
       console.error("Error deleting book: ", error);
     }
@@ -98,29 +98,13 @@ const MyPage = () => {
    * 書籍の高さを更新する
    * @param books 書籍リスト
    */
-
-  const [totalHeight, setTotalHeight] = useState<number>(0);
-  const [lastThreshold, setLastThreshold] = useState<number>(0);
-  const [currentRankName, setCurrentRankName] = useState<string>("");
-  const [showThresholdModal, setShowThresholdModal] = useState<boolean>(false);
-
-  const updateTotalHeight = (books: Book[]): void => {
-    const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
-    const newTotalHeight =
-      Math.floor(totalPages * heightPerBookPage * 100) / 100;
-    setTotalHeight(newTotalHeight);
-
-    const latestRank = thresholds
-      .slice()
-      .reverse() // 閾値リストを逆順にして
-      .find((threshold) => newTotalHeight >= threshold.limit); // 最初に条件を満たす要素を取得
-
-    if (latestRank && latestRank.limit !== lastThreshold) {
-      setLastThreshold(latestRank.limit);
-      setCurrentRankName(latestRank.name);
-      setShowThresholdModal(true);
-    }
-  };
+  const {
+    currentRankName,
+    showThresholdModal,
+    totalHeight,
+    lastThreshold,
+    closeModal,
+  } = useRankManagement(user?.uid, books);
 
   function getImageForHeight(height: number): string {
     const defaultImage = "1.2cm";
@@ -210,8 +194,7 @@ const MyPage = () => {
             ...(doc.data() as Book),
             id: doc.id,
           }));
-          setBooks(userBooks);
-          updateTotalHeight(userBooks);
+          setBooks(userBooks); // フックが自動的に totalHeight を更新する
         };
 
         fetchBooks();
@@ -320,7 +303,7 @@ const MyPage = () => {
 
       <ThresholdExceededModal
         isOpen={showThresholdModal}
-        onClose={() => setShowThresholdModal(false)}
+        onClose={closeModal}
         height={totalHeight}
         rankName={currentRankName}
         thresholdLimit={lastThreshold}
