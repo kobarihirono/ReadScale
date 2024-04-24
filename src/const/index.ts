@@ -2,6 +2,7 @@
 
 // 本の高さの閾値を定義
 export const thresholds = [
+  { limit: 1.2, image: "0cm", name: "ハチ" },
   { limit: 7, image: "1.2cm", name: "ヒヨコ" },
   { limit: 25, image: "7cm", name: "ネコ" },
   { limit: 50, image: "25cm", name: "ウサギ" },

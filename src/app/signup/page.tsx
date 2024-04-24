@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import {
+  Box,
   Button,
   Flex,
   FormControl,
@@ -201,22 +202,24 @@ export default function SignUpScreen() {
                 {errors.confirm && errors.confirm.message}
               </FormErrorMessage>
             </FormControl>
-            <Button
-              marginTop="4"
-              color="white"
-              bg="blue.700"
-              isLoading={isSubmitting}
-              type="submit"
-              py="2"
-              px="8"
-              rounded="full"
-              _hover={{
-                borderColor: "transparent",
-                bg: "blue.600",
-              }}
-            >
-              新規登録
-            </Button>
+            <Box display="flex" justifyContent="center" mt="4">
+              <Button
+                color="white"
+                bg="blue.700"
+                isLoading={isSubmitting}
+                type="submit"
+                py="2"
+                px="8"
+                rounded="full"
+                w="auto"
+                _hover={{
+                  borderColor: "transparent",
+                  bg: "blue.600",
+                }}
+              >
+                新規登録
+              </Button>
+            </Box>
           </VStack>
         </form>
         <Button

@@ -1,5 +1,6 @@
+"use client";
+
 import React from "react";
-import Link from "next/link";
 
 const Terms = () => {
   return (
@@ -86,12 +87,12 @@ const Terms = () => {
         </li>
       </ul>
       <div className="flex mt-14 justify-center">
-        <Link
+        <button
           className="bg-navy text-white font-bold rounded-full py-2 px-8"
-          href="/"
+          onClick={() => window.history.back()}
         >
-          トップへ戻る
-        </Link>
+          戻る
+        </button>
       </div>
     </div>
   );
