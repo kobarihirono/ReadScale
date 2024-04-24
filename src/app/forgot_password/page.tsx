@@ -1,7 +1,6 @@
 // src/app/forgot_password/page.tsx
 "use client";
 
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import NextLink from "next/link";
 import { sendPasswordReset } from "@/lib/firebase/apis/auth";
@@ -9,6 +8,7 @@ import type { FormData } from "../../types/index";
 import { FaKey } from "react-icons/fa";
 
 import {
+  Box,
   Button,
   Flex,
   FormControl,
@@ -112,23 +112,24 @@ const ForgotPasswordPage = () => {
                 errors.email.message}
             </FormErrorMessage>
           </FormControl>
-
-          <Button
-            marginTop="4"
-            color="white"
-            bg="blue.700"
-            py="2"
-            px="8"
-            rounded="full"
-            _hover={{
-              borderColor: "transparent",
-              bg: "blue.600",
-            }}
-            type="submit"
-            variant="link"
-          >
-            送信する
-          </Button>
+          <Box display="flex" justifyContent="center" mt="4">
+            <Button
+              color="white"
+              bg="blue.700"
+              py="2"
+              px="8"
+              rounded="full"
+              w="auto"
+              _hover={{
+                borderColor: "transparent",
+                bg: "blue.600",
+              }}
+              type="submit"
+              variant="link"
+            >
+              送信する
+            </Button>
+          </Box>
           <Button
             as={NextLink}
             href="/signin"

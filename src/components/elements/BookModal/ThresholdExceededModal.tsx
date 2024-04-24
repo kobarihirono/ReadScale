@@ -21,7 +21,7 @@ const ThresholdExceededModal: React.FC<ThresholdExceededModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 overflow-auto bg-smoke-light flex">
-      <div className="relative border-2 p-8 bg-white w-full max-w-md m-auto flex-col flex rounded-lg">
+      <div className="relative border-2 p-8 bg-white w-full max-w-md m-auto flex-col flex rounded-lg mx-4 sm:mx-6 md:mx-10 lg:mx-20 xl:mx-40">
         <h2 className="text-lg font-bold mb-2">おめでとうございます！</h2>
         <p className="mb-4">
           {rankName} と同じ高さ ({thresholdLimit} cm) に到達しました。

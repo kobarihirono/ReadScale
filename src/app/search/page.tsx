@@ -1,7 +1,7 @@
 // search/page.tsx
 "use client";
 
-import React, { SyntheticEvent, useState, ChangeEvent } from "react";
+import React, { SyntheticEvent, useState, ChangeEvent, FormEvent } from "react";
 import type { NextPage } from "next";
 import BookItem from "../../components/elements/BookItem/BookItem";
 import AddBookModal from "../../components/elements/BookModal/AddModal";
@@ -17,6 +17,11 @@ const BookSearch: NextPage = () => {
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [sortOrder, setSortOrder] = useState<string>("");
+
+  const onSubmitSearch = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onClickSearch(e);
+  };
 
   const onClickSearch = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -76,7 +81,7 @@ const BookSearch: NextPage = () => {
     <div className="w-full mb-12">
       <div className="flex justify-center">
         <div className="flex flex-col items-center w-full bg-navy py-6 rounded-b-3xl">
-          <div className="relative w-8/12 lg:w-6/12">
+          <form className="relative w-8/12 lg:w-6/12" onSubmit={onSubmitSearch}>
             <input
               type="text"
               value={query}
@@ -95,7 +100,7 @@ const BookSearch: NextPage = () => {
                 height={30}
               />
             </button>
-          </div>
+          </form>
         </div>
       </div>
 

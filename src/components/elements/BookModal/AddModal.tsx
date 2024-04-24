@@ -85,7 +85,7 @@ const AddBookModal: React.FC<AddBookModalProps> = ({ book, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+      <div className="bg-white p-6 rounded-lg shadow-lg mx-4 sm:mx-6 md:mx-10 lg:mx-20 xl:mx-40 max-w-md w-full">
         <h2 className="text-lg font-semibold">{book.title}</h2>
         <form onSubmit={handleSubmit(handleAddBook)} className="mt-4">
           <label

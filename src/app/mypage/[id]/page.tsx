@@ -98,7 +98,7 @@ const MyPage = () => {
    * 書籍の高さを更新する
    * @param books 書籍リスト
    */
-  
+
   const userId = user ? user.uid : undefined;
   const {
     currentRankName,
@@ -228,17 +228,19 @@ const MyPage = () => {
             <p className="pt-6 text-white text-3xl">{user.displayName}</p>
             <p className="mt-2 text-white">{user.email}</p>
             <div className="flex justify-center items-center">
-              <div className="flex justify-center items-center relative top-10 bg-white shadow-md gap-4 w-7/12 p-4 rounded-xl">
+              <div className="flex justify-center items-center relative top-10 bg-white shadow-md gap-4 w-8/12 p-4 rounded-xl">
                 <Image
                   src={getImageForHeight(totalHeight)}
                   width={60}
                   height={60}
-                  alt="ユーザーアイコンが表示されます"
+                  alt="高さに応じたアイコンが表示されます"
                 />
                 <div className="ml-4">
                   <p>{totalHeight} cm</p>
                   <p className="text-sm mt-1 text-slate-500">
-                    次のランクまで{pagesToNextRank}ページ
+                    次のランクまで
+                    <br />
+                    {pagesToNextRank}ページ
                   </p>
                 </div>
               </div>
