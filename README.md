@@ -27,7 +27,6 @@ https://github.com/kobarihirono/ReadScale/assets/131847306/63394ad3-08ef-4d79-b6
 
 1. React/Next.jsを使用したアプリを最後まで作り切る
 1. リファクタリングを行い、よりよい実装方法を模索する
-1. テストコードの書き方を学ぶ
 1. 今回の失敗経験を今後の個人制作のディレクトリ構造やコンポーネント設計に活かす
 
 ## 機能一覧
@@ -99,11 +98,6 @@ https://github.com/kobarihirono/ReadScale/assets/131847306/63394ad3-08ef-4d79-b6
 - **認証**
 
   - Firebase Authentication
-
-- **テスト**
-
-  - Jest
-  - React Testing Library
 
 - **デザインツール**
 
