@@ -36,7 +36,6 @@ const BookSearch: NextPage = () => {
       }
       const data = await response.json();
       setItems(data);
-      setQuery("");
     } catch (error) {
       console.error("検索結果の抽出に失敗しました:", error);
       setError("Failed to load books. Please try again.");
