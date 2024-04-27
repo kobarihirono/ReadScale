@@ -38,7 +38,7 @@ export default async function handler(
 
 async function getData(query: string): Promise<Book[]> {
   const response = await fetch(
-    `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=40&langRestrict=ja`,
+    `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=40&langRestrict=ja&printType=books&orderBy=relevance`,
   );
 
   if (!response.ok) {
